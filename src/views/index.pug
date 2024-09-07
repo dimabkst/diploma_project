@@ -1,0 +1,14 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title HTMX Example
+    script(src="https://unpkg.com/htmx.org@2.0.2")
+  body
+    h1 Welcome to the Web App
+    form(hx-post="/submit", hx-target="#result", hx-swap="innerHTML")
+      label(for="name") Enter your name:
+      input(type="text", id="name", name="name", required)
+      button(type="submit") Submit
+    div#result
