@@ -1,6 +1,7 @@
 require('dotenv').config();
 import express, { Request, Response } from 'express';
 import path from 'path';
+import prisma from './db';
 import logger from './utils/logger';
 
 const { PORT } = process.env;
@@ -20,9 +21,23 @@ app.get('/', (req: Request, res: Response) => {
 
 app.post('/submit', (req: Request, res: Response) => {
   const { name } = req.body;
-  res.send(`<div>Hello, ${name}! asd</div>`);
+  res.send(`<div>Hello, ${name}!</div>`);
 });
 
-app.listen(port, () => {
-  logger.info(`Application started on port ${port}!`);
-});
+const connectDb = async () => {
+  await prisma.$connect();
+};
+
+connectDb()
+  .then(() => {
+    logger.info('Database successfully connected');
+
+    app.listen(port, () => {
+      logger.info(`Application started on port ${port}!`);
+    });
+  })
+  .catch((e) => {
+    logger.error(e);
+
+    process.exit(1);
+  });
