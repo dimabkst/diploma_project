@@ -1,0 +1,23 @@
+#toast-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 9999;
+}
+  
+.error-toast {
+    background-color: #f44336;
+    color: white;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.default-toast {
+    background-color: #4CAF50; /* Green for default */
+    color: white;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+  

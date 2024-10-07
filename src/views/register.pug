@@ -1,0 +1,22 @@
+extends layout
+
+block head
+  script(src="/js/check-login.js") 
+
+block content
+  h1 Register
+  form(id='register-form', hx-post='/register', hx-target='this', hx-swap='none')
+    label(for='name') Name:
+    input(type='text', name='name', required)
+    br
+    label(for='email') Email:
+    input(type='text', name='email', required)
+    br
+    label(for='password') Password:
+    input(type='password', name='password', required)
+    br
+    button(type='submit') Register
+  if error
+    p.error= error
+
+  script(src="https://unpkg.com/htmx.org@2.0.2")

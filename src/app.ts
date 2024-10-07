@@ -4,6 +4,8 @@ import path from 'path';
 import prisma from './db';
 import logger from './utils/logger';
 
+import auth from './auth';
+
 const { PORT } = process.env;
 
 const app = express();
@@ -13,6 +15,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/', (req: Request, res: Response) => {
@@ -23,6 +26,8 @@ app.post('/submit', (req: Request, res: Response) => {
   const { name } = req.body;
   res.send(`<div>Hello, ${name}!</div>`);
 });
+
+app.use(auth);
 
 const connectDb = async () => {
   await prisma.$connect();

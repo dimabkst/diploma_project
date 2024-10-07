@@ -1,0 +1,18 @@
+extends layout
+
+block head
+  script(src="/js/check-login.js") 
+
+block content
+  h1 Login
+  form(id='login-form', hx-post='/login', hx-target='this', hx-swap='none')
+    label(for='email') Email:
+    input(type='text', name='email', required)
+    br
+    label(for='password') Password:
+    input(type='password', name='password', required)
+    br
+    button(type='submit') Login
+
+  script(src="https://unpkg.com/htmx.org@2.0.2")
+  script(src="/js/login.js")
