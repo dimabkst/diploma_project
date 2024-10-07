@@ -14,6 +14,8 @@ auth.post('/register', checkAuth({ allowUnauthenticated: true }), validation(reg
 auth.get('/login', (req: Request, res: Response) => res.render('login'));
 auth.post('/login', checkAuth({ allowUnauthenticated: true }), validation(loginUserSchema), loginUser);
 
+auth.get('/logout', (req: Request, res: Response) => res.redirect('/login'));
+
 auth.get('/check-login', checkAuth({ allowUnauthenticated: true }), checkLogin);
 
 export default auth;

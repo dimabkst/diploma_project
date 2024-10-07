@@ -1,5 +1,6 @@
 import { showToast } from './toasts.js';
 
+// Error handling
 const defaultErrorMessage = 'Something went wrong';
 
 // Capture all global errors
@@ -30,5 +31,15 @@ document.body.addEventListener('htmx:responseError', (event) => {
   if (status >= 400) {
     const errorMessage = JSON.parse(xhr.responseText).message || defaultErrorMessage;
     showToast(errorMessage, 'error');
+  }
+});
+
+// add bearer token to each htmx request
+document.body.addEventListener('htmx:configRequest', (event) => {
+  const token = localStorage.getItem('token');
+  //   const serverBaseUrl = window.location.origin; // TODO: compare url if use third-party services
+
+  if (token) {
+    event.detail.headers['Authorization'] = `Bearer ${token}`;
   }
 });
