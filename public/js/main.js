@@ -1,6 +1,5 @@
 import { showToast } from './toasts.js';
 
-// Error handling
 const defaultErrorMessage = 'Something went wrong';
 
 // Capture all global errors
@@ -42,4 +41,11 @@ document.body.addEventListener('htmx:configRequest', (event) => {
   if (token) {
     event.detail.headers['Authorization'] = `Bearer ${token}`;
   }
+});
+
+// logout button logic
+document.querySelector('a[href="/logout"]').addEventListener('click', function (e) {
+  e.preventDefault();
+  localStorage.removeItem('token');
+  window.location.href = '/login';
 });
