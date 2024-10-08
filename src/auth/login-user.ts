@@ -5,6 +5,7 @@ import prisma from '../db';
 import { UserRole } from '../db/types';
 import { RequestWithBody } from '../utils/types';
 import { HttpError } from '../utils/error';
+import { setRedirectHeader } from '../utils/response';
 import handleRequest from '../utils/request';
 
 const loginUser = async ({ body }: RequestWithBody<ILoginUserPayload>, res: Response) => {
@@ -29,9 +30,15 @@ const loginUser = async ({ body }: RequestWithBody<ILoginUserPayload>, res: Resp
     rememberMe,
   });
 
-  return res.status(200).json({
-    token,
+  res.cookie('token', token, {
+    httpOnly: true, // Not accessible via JavaScript
+    secure: true, // Only sent over HTTPS
+    sameSite: 'strict', // Prevents CSRF
   });
+
+  setRedirectHeader(res, '/');
+
+  return res.sendStatus(204);
 };
 
 export default handleRequest(loginUser);

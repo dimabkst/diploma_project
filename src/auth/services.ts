@@ -39,7 +39,7 @@ export const verifyToken = (token: string): IVerifiedTokenData => {
 export const checkAuth = (options?: ICheckAuthOptions) => {
   return async (req: RequestWithUser, res: Response, next: NextFunction) => {
     try {
-      const token = req.get('Authorization')?.split(' ')[1];
+      const token = req.cookies?.token;
 
       if (!token) {
         throw new HttpError(401, 'No token provided');

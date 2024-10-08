@@ -32,20 +32,3 @@ document.body.addEventListener('htmx:responseError', (event) => {
     showToast(errorMessage, 'error');
   }
 });
-
-// add bearer token to each htmx request
-document.body.addEventListener('htmx:configRequest', (event) => {
-  const token = localStorage.getItem('token');
-  //   const serverBaseUrl = window.location.origin; // TODO: compare url if use third-party services
-
-  if (token) {
-    event.detail.headers['Authorization'] = `Bearer ${token}`;
-  }
-});
-
-// logout button logic
-document.querySelector('a[href="/logout"]').addEventListener('click', function (e) {
-  e.preventDefault();
-  localStorage.removeItem('token');
-  window.location.href = '/login';
-});

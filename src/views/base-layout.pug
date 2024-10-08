@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Diploma Project
+    //-   if title
+    //-     | - #{title}
+    link(rel="stylesheet" href="/css/toasts.css")
+    block head
+    
+  body
+    header
+      block header
+
+    main
+      block content
+    
+    footer
+      p &copy; 2024 Diploma Project
+
+    // Toasts
+    #toast-container
+    #toast-template(style="display: none")
+        div
+        span#toast-message
+
+    script(type="module", src="/js/main.js")

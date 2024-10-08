@@ -1,5 +1,6 @@
 require('dotenv').config();
 import express, { Request, Response } from 'express';
+import cookieParser from 'cookie-parser';
 import path from 'path';
 import prisma from './db';
 import logger from './utils/logger';
@@ -16,6 +17,7 @@ app.set('view engine', 'pug');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/', (req: Request, res: Response) => {
