@@ -21,14 +21,21 @@
     list-style-type: none; /* Remove default list styles */
     display: flex; /* Align items in a row */
     align-items: center; /* Align items vertically in the center */
-    justify-content: center;
+    justify-content: space-between; /* Distribute space between items */
 }
 
-.header-icon {
-    width: 32px;
-    height: auto;
-    margin-right: 20px;
-    vertical-align: middle; /* Align with text */
+.header-menu-left {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.header-menu-right {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .header-menu-item {
@@ -41,6 +48,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.header-menu-item:last-child {
+    margin-right: 0;
+}
+
+.header-icon {
+    width: 32px;
+    height: auto;
+    vertical-align: middle; /* Align with text */
 }
 
 .header-menu-item-anchor {
@@ -62,4 +79,40 @@
 
 .header-menu-item-icon {
     display: block;
+}
+
+.header-button {
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    line-height: 1;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    white-space: nowrap; /* Prevent text from breaking into multiple lines */
+}
+
+.button-signout {
+    background-color: red;
+    color: white;
+    border: none;
+}
+
+.button-signout:hover {
+    background-color: darkred;
+}
+
+/* Login and Register buttons */
+.button-auth {
+    background-color: white;
+    color: gray;
+    border: 2px solid gray;
+}
+
+.button-auth:hover {
+    background-color: #f0f0f0;
+    color: black;
+    border-color: black;
 }
