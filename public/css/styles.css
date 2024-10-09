@@ -1,0 +1,23 @@
+:root {
+    --header-height: 72px;
+    --header-padding: 25px;
+    --app-text-color: #6a6a6a;
+}
+
+* {
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+body {
+    margin: 0; /* Remove default margin */
+    background-color: #f5f5f5;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    padding: var(--header-padding);
+    padding-top: 0;
+    margin-top: var(--header-height) /* Dynamic margin based on header size */
+}
+
+.app-text {
+    color: var(--app-text-color)
+}

@@ -3,14 +3,30 @@ html(lang="en")
   head
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(name="robots" content="noindex")
     title Diploma Project
-    //-   if title
-    //-     | - #{title}
+    link(rel="stylesheet" href="/css/styles.css")
+    link(rel="stylesheet" href="/css/header.css")
     link(rel="stylesheet" href="/css/toasts.css")
+    link(href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet")
+    link(rel='apple-touch-icon' sizes='180x180' href='/images/icons/apple-touch-icon.png')
+    link(rel='icon' type='image/png' sizes='32x32' href='/images/icons/favicon-32x32.png')
+    link(rel='icon' type='image/png' sizes='16x16' href='/images/icons/favicon-16x16.png')
+    link(rel='manifest' href='/images/icons/site.webmanifest')
+    link(rel='icon' href='/images/icons/favicon.ico' type='image/x-icon')
+    meta(name='theme-color' content='#ffffff')
     block head
     
   body
     header
+      nav.header-nav
+          ul.header-menu
+            li
+              a(href='/')
+                //- TODO: add another icon, adjust it so header height is not changed
+                img.header-icon(src='/images/icons/favicon-32x32.png' alt='Home Icon')
+            block header-menu
+
       block header
 
     main

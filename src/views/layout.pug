@@ -1,10 +1,11 @@
 extends base-layout
 
-block header
-  nav
-    ul
-      li
-        a(href='/') Home
-      li
-        form(id='logout-form', hx-post='/logout', hx-target='this', hx-swap='none')
-          button(type='submit') Logout
+block header-menu 
+  li.header-menu-item
+    a.header-menu-item-anchor(href='/')
+      //- span.header-menu-item-icon
+      //-   svg(width='24', height='24', xmlns='http://www.w3.org/2000/svg')
+      span Home
+  li.header-menu-item
+    form(id='logout-form', hx-post='/logout', hx-target='this', hx-swap='none')
+      button(type='submit') Logout

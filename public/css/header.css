@@ -1,0 +1,65 @@
+.header-nav {
+    width: 100%; 
+    height: var(--header-height);
+    padding: 0 var(--header-padding);
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10; /* Header is above other content */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4); /* Small shadow at the bottom */
+    display: flex;
+    align-items: center; /* Vertically align items */
+    justify-content: space-between; /* Distribute space between items */
+}
+
+.header-menu {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0; 
+    list-style-type: none; /* Remove default list styles */
+    display: flex; /* Align items in a row */
+    align-items: center; /* Align items vertically in the center */
+    justify-content: center;
+}
+
+.header-icon {
+    width: 32px;
+    height: auto;
+    margin-right: 20px;
+    vertical-align: middle; /* Align with text */
+}
+
+.header-menu-item {
+    height: 100%;
+    margin-right: 20px;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-menu-item-anchor {
+    height: 100%; /* Ensure the button takes full height */
+    text-decoration: none; /* Remove underline */
+    color: var(--app-text-color); /* Text color */
+    font-weight: bold;
+    border-left: 1px solid #e0e0e0; /* Vertical line between items */
+    border-right: 1px solid #e0e0e0; /* Vertical line between items */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Vertically center text inside buttons */
+    justify-content: center; /* Center content horizontally */
+}
+
+.header-menu-item-anchor:hover {
+    background-color: #f7f7f7;
+}
+
+.header-menu-item-icon {
+    display: block;
+}
