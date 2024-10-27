@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import { Router } from 'express';
 import createTerritory from './create-territory';
 import getTerritories from './get-territories';
 import updateTerritory from './update-territory';
@@ -7,7 +7,7 @@ import { createSchema, getSchema, updateSchema, deleteSchema } from './schemas';
 import validation from '../utils/joi';
 import { checkAuth } from '../auth/services';
 
-const territories: Router = express.Router();
+const territories: Router = Router();
 
 territories.post('/', checkAuth(), validation(createSchema), createTerritory);
 territories.get('/', checkAuth(), validation(getSchema), getTerritories);

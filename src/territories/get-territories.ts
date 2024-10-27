@@ -28,10 +28,7 @@ const getTerritories = async (req: RequestWithUser<IGetTerritoriesQuery>, res: R
     where: filter,
     select: { id: true, name: true, _count: { select: { customer: true } } },
     ...pagination,
-    orderBy: {
-      name: req.query.sort_name || 'asc',
-      id: 'asc',
-    },
+    orderBy: [{ name: req.query.sort_name || 'asc' }, { id: 'asc' }],
   });
 
   const [count, territories] = await Promise.all([countQuery, getQuery]);
