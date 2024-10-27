@@ -19,3 +19,26 @@ export interface RequestWithUser<Q = Query> extends RequestWithQuery<Q> {
 export interface RequestWithUserAndBody<T, Q = Query> extends RequestWithUser<Q> {
   body: T;
 }
+
+export interface IOffsetPaginationQuery {
+  limit?: string;
+  page?: string;
+}
+
+export interface ICursorPaginationQuery {
+  limit?: string;
+  cursor?: string;
+}
+
+export interface IPagination {
+  take?: number;
+  skip?: number;
+}
+
+export interface ICursorPagination {
+  take?: number;
+  skip?: number;
+  cursor?: any;
+}
+
+export type SortQuery = 'asc' | 'desc';

@@ -13,7 +13,7 @@ export interface IRegisterUserPayload {
 }
 
 export interface ITokenData {
-  id: string;
+  id: number;
   userRole: UserRole;
   rememberMe?: boolean;
 }

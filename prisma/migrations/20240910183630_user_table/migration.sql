@@ -7,7 +7,7 @@ CREATE TABLE "UserRole" (
 CREATE TABLE "User" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
-    "email" TEXT NOT NULL COLLATE NOCASE,
+    "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "role" TEXT NOT NULL DEFAULT 'USER',
     CONSTRAINT "User_role_fkey" FOREIGN KEY ("role") REFERENCES "UserRole" ("role") ON DELETE RESTRICT ON UPDATE CASCADE

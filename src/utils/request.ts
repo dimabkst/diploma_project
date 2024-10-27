@@ -2,9 +2,16 @@ import { Request, Response, NextFunction } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { RequestWithUser } from './types';
 import { HttpError } from './error';
 import { setRedirectHeader } from './response';
 import logger from './logger';
+
+export function checkUserInRequest(user: RequestWithUser['user']): asserts user is Required<RequestWithUser>['user'] {
+  if (!user) {
+    throw new HttpError(401, 'Unauthorized');
+  }
+}
 
 const handleRequest = (
   handler: (req: Request<ParamsDictionary, any, any, any>, res: Response, next?: NextFunction) => Promise<any>
@@ -44,7 +51,7 @@ const handleRequest = (
 
         if (e.code === 'P2003' || e.code === 'P2025') {
           return res.status(404).json({
-            message: 'Not found',
+            message: e.code === 'P2003' ? 'Not found' : e.message,
           });
         }
 

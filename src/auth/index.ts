@@ -1,5 +1,4 @@
 import express, { Router } from 'express';
-import validation from '../utils/joi';
 import getRegistrationPage from './get-registration-page';
 import getLoginPage from './get-login-page';
 import registerUser from './register-user';
@@ -7,6 +6,7 @@ import loginUser from './login-user';
 import logoutUser from './logout-user';
 import { loginUserSchema, registerUserSchema } from './schemas';
 import { checkAuth } from './services';
+import validation from '../utils/joi';
 
 const auth: Router = express.Router();
 

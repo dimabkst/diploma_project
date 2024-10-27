@@ -7,7 +7,7 @@ const validation = (schema: Joi.ObjectSchema) => {
 
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await extendedSchema.validateAsync(req);
+      await extendedSchema.validateAsync(req, { errors: { label: 'key', wrap: { label: false } } });
 
       next();
     } catch (e) {

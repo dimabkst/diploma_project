@@ -6,6 +6,7 @@ import prisma from './db';
 import logger from './utils/logger';
 
 import auth from './auth';
+import territories from './territories';
 
 const { PORT } = process.env;
 
@@ -21,15 +22,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/', (req: Request, res: Response) => {
-  res.render('index');
+  return res.render('index');
 });
 
 app.post('/submit', (req: Request, res: Response) => {
   const { name } = req.body;
-  res.send(`<div>Hello, ${name}!</div>`);
+  return res.send(`<div>Hello, ${name}!</div>`);
 });
 
 app.use(auth);
+app.use('/territories', territories);
 
 const connectDb = async () => {
   await prisma.$connect();

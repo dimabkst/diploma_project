@@ -13,10 +13,62 @@ model UserRole {
 }
 
 model User {
-  id       String   @id @default(uuid())
+  id          Int         @id @default(autoincrement())
+  name        String
+  email       String      @unique
+  password    String
+  role        String      @default("USER")
+  userRole    UserRole    @relation(fields: [role], references: [role])
+  customers   Customer[]
+  territories Territory[]
+}
+
+model Customer {
+  id                 Int        @id @default(autoincrement())
+  customId           String?
+  active             Boolean    @default(true)
+  userId             Int
+  user               User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name               String
+  phone              String?
+  businessFax        String?
+  email              String?
+  website            String?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @default(now()) @updatedAt
+  lastOrderCreatedAt DateTime?
+  totalOrdersVolumes Float      @default(0)
+  billingAddress     Address?   @relation("Billing")
+  shippingAddress    Address?   @relation("Shipping")
+  territoryId        Int?
+  territory          Territory? @relation(fields: [territoryId], references: [id])
+
+  @@unique([userId, name])
+  @@unique([userId, customId])
+}
+
+model Territory {
+  id       Int        @id @default(autoincrement())
   name     String
-  email    String   @unique
-  password String
-  role     String   @default("USER")
-  userRole UserRole @relation(fields: [role], references: [role])
+  userId   Int
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customer Customer[]
+
+  @@unique([userId, name])
+}
+
+model Address {
+  id                 Int       @id @default(autoincrement())
+  formatted_address  String
+  lat                Float?
+  lng                Float?
+  street             String?
+  city               String?
+  state              String?
+  zip                String?
+  appartement        String?
+  customerIdBilling  Int?      @unique
+  customerBilling    Customer? @relation("Billing", fields: [customerIdBilling], references: [id], onDelete: Cascade)
+  customerIdShipping Int?      @unique
+  customerShipping   Customer? @relation("Shipping", fields: [customerIdShipping], references: [id], onDelete: Cascade)
 }

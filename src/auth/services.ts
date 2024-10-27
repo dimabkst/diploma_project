@@ -67,7 +67,7 @@ export const checkAuth = (options?: ICheckAuthOptions) => {
         if ((e instanceof HttpError && e.status === 401) || e instanceof JsonWebTokenError || e instanceof TokenExpiredError) {
           setRedirectHeader(res, '/login');
 
-          res.sendStatus(401);
+          return res.sendStatus(401);
         } else if (e instanceof HttpError) {
           return res.status(e.status).json({
             ...e.meta,
@@ -75,7 +75,7 @@ export const checkAuth = (options?: ICheckAuthOptions) => {
           });
         }
 
-        res.sendStatus(500);
+        return res.sendStatus(500);
       } else {
         return next();
       }
