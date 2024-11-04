@@ -6,7 +6,7 @@ import prisma from './db';
 import logger from './utils/logger';
 
 import auth from './auth';
-import territories from './territories';
+import api from './api';
 
 const { PORT } = process.env;
 
@@ -25,13 +25,8 @@ app.get('/', (req: Request, res: Response) => {
   return res.render('index');
 });
 
-app.post('/submit', (req: Request, res: Response) => {
-  const { name } = req.body;
-  return res.send(`<div>Hello, ${name}!</div>`);
-});
-
 app.use(auth);
-app.use('/territories', territories);
+app.use('/api', api);
 
 const connectDb = async () => {
   await prisma.$connect();

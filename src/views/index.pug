@@ -2,10 +2,5 @@ extends layout
 
 block content
   h1 Welcome to the Web App
-  form(hx-post="/submit", hx-target="#result", hx-swap="innerHTML")
-    label(for="name") Enter your name:
-    input(type="text", id="name", name="name", required)
-    button(type="submit") Submit
-  div#result
 
   script(src="https://unpkg.com/htmx.org@2.0.2")
