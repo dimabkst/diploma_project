@@ -2,6 +2,12 @@ import { showToast } from './toasts.js';
 
 const defaultErrorMessage = 'Something went wrong';
 
+export function toastError(err) {
+  const errorMessage = err?.body?.message || err?.statusText || err?.message || err || defaultErrorMessage;
+
+  return showToast(errorMessage, 'error');
+}
+
 export function errorHandling() {
   // Capture all global errors
   window.onerror = function (message, source, lineno, colno, error) {

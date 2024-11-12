@@ -1,41 +1,82 @@
-function fetchTerritoriesData() {
-  fetch('/api/territories')
-    .then((response) => response.json())
-    .then((data) => {
-      const territoriesList = document.getElementById('territories-list');
-      territoriesList.innerHTML = ''; // Clear list
+import { getTerritoriesPage, territoriesPageTriggers } from './territories.js';
 
-      data.forEach((territory) => {
-        const li = document.createElement('li');
-        li.textContent = territory.name;
-        territoriesList.appendChild(li);
-      });
-    })
-    .catch((err) => console.error('Error fetching territories:', err));
+const routes = {
+  '/territories': {
+    template: getTerritoriesPage,
+    triggers: territoriesPageTriggers,
+  },
+};
+
+function renderPage(path) {
+  const appRoot = document.getElementById('app-root');
+
+  if (!appRoot) {
+    console.error('App root element not found');
+    return;
+  }
+
+  const route = routes[path];
+
+  if (route && route.template) {
+    appRoot.innerHTML = route.template();
+  } else {
+    appRoot.innerHTML = `<h1>Page Not Found</h1>`;
+  }
+}
+
+function executePageTriggers(path) {
+  const route = routes[path];
+  if (route && route.triggers) {
+    route.triggers();
+  }
+}
+
+export function isServerRenderedRoute(path) {
+  return ['/login', '/register', '/'].includes(path);
 }
 
 function handleRouteChange() {
   const path = window.location.pathname;
 
-  if (path === '/territories') {
-    fetchTerritoriesData();
+  if (!isServerRenderedRoute(path)) {
+    renderPage(path);
+    executePageTriggers(path);
+  } else if (sessionStorage.getItem('lastRedirectedPath') !== path) {
+    sessionStorage.setItem('lastRedirectedPath', path);
+    window.location.href = path;
   }
 }
 
 export function routingHandling() {
   // Trigger on page load
-  document.addEventListener('DOMContentLoaded', handleRouteChange);
+  document.addEventListener('DOMContentLoaded', () => {
+    const lastRedirectedPath = sessionStorage.getItem('lastRedirectedPath');
+
+    handleRouteChange();
+
+    // remove item only if it was set before, so there won't be loop when opening page for the first time
+    if (lastRedirectedPath) {
+      sessionStorage.removeItem('lastRedirectedPath');
+    }
+  });
 
   // For doing dynamic routing in an SPA
   window.addEventListener('popstate', handleRouteChange);
 
-  document.querySelectorAll('a.nav-link').forEach((link) => {
+  document.querySelectorAll('a[data-route]').forEach((link) => {
     link.addEventListener('click', function (event) {
-      event.preventDefault(); // Prevent full page reload
-      const target = event.target.getAttribute('href');
+      const target = event.target.closest('a[data-route]');
 
-      history.pushState({}, '', target); // Update the URL
-      // renderPage(); // Render the corresponding page dynamically
+      if (target) {
+        event.preventDefault();
+
+        const href = target.getAttribute('href');
+
+        if (href && href !== window.location.pathname) {
+          history.pushState({}, '', href);
+          handleRouteChange();
+        }
+      }
     });
   });
 }
