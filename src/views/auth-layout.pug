@@ -2,8 +2,8 @@ extends base-layout
 
 block header-menu-right
   li.header-menu-item
-    a(href='/login', class='header-button button-auth')
+    a(data-route href='/login', class='header-button button-auth')
       span Sign In
   li.header-menu-item
-    a(href='/register', class='header-button button-auth')
+    a(data-route href='/register', class='header-button button-auth')
       span Sign Up
