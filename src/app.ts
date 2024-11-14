@@ -26,7 +26,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(auth);
 app.use('/api', api);
 
-// TODO: change this logic, fix multiple renderings on client after redirect to login, remove all ssr routes
+// TODO: change this logic or fix multiple renderings on client after redirect to login or remove all ssr routes
+// or fix toasts when rerendering page
 app.get('/', checkAuth({ allowUnauthenticated: true }), (req: RequestWithUser, res: Response) => {
   if (!req.user) {
     return res.redirect('/login');
