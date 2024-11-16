@@ -18,5 +18,6 @@ export const registerUserSchema: Joi.ObjectSchema = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email({ tlds: false }).required(),
     password,
+    repeatPassword: password,
   }),
 });

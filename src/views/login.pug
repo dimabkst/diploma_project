@@ -7,7 +7,7 @@ block content
     h2.login-h2 Login
     form(class='login-form' hx-post='/login', hx-target='this', hx-swap='none')
       .login-form-group
-        input(class='login-input', type='text', name='email', required, placeholder='Email')
+        input(class='login-input', type='email', name='email', required, placeholder='Email')
       .login-form-group
-        input(class='login-input', type='password', name='password', required, placeholder='Password')
+        input(class='login-input', type='password', name='password', required, autocomplete='current-password', placeholder='Password')
       button(type='submit' class='login-button') Log In
