@@ -8,9 +8,6 @@
     left: 0;
     z-index: 10; /* Header is above other content */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4); /* Small shadow at the bottom */
-    display: flex;
-    align-items: center; /* Vertically align items */
-    justify-content: space-between; /* Distribute space between items */
 }
 
 .header-menu {
@@ -36,11 +33,11 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    gap: 20px;
 }
 
 .header-menu-item {
     height: 100%;
-    margin-right: 20px;
     position: relative;
     text-align: center;
     display: flex;
@@ -50,17 +47,9 @@
     justify-content: center;
 }
 
-.header-menu-item:last-child {
-    margin-right: 0;
-}
-
-.header-icon {
-    width: 32px;
-    height: auto;
-    vertical-align: middle; /* Align with text */
-}
-
 .header-menu-item-anchor {
+    padding: 0 10px;
+    margin-right: -1px; /* Prevents thicker borders for neighbour elements */
     height: 100%; /* Ensure the button takes full height */
     text-decoration: none; /* Remove underline */
     color: var(--app-text-color); /* Text color */
@@ -77,8 +66,18 @@
     background-color: #f7f7f7;
 }
 
-.header-menu-item-icon {
-    display: block;
+.header-icon-anchor {
+    padding: 0;
+    margin-right: var(--header-padding);
+    outline: none;
+    height: auto;
+    width: auto;
+}
+
+.header-icon {
+    width: 32px;
+    height: auto;
+    vertical-align: middle; /* Align with text */
 }
 
 .header-button {
