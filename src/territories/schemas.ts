@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { cursorPaginationPartialSchema } from '../utils/pagination';
+import { offsetPaginationPartialSchema } from '../utils/pagination';
 
 export const createSchema: Joi.ObjectSchema = Joi.object({
   body: Joi.object({
@@ -9,7 +9,7 @@ export const createSchema: Joi.ObjectSchema = Joi.object({
 
 export const getSchema: Joi.ObjectSchema = Joi.object({
   query: {
-    ...cursorPaginationPartialSchema,
+    ...offsetPaginationPartialSchema,
     search: Joi.string().optional().allow(''),
     sort_name: Joi.string().valid('asc', 'desc').optional().allow(''),
   },

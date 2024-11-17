@@ -31,3 +31,9 @@ export enum UserRole {
   USER = 'USER',
   SUPER_ADMIN = 'SUPER_ADMIN',
 }
+
+export enum OrderStatus {
+  COMPLETED = 'COMPLETED',
+  PENDING = 'PENDING',
+  CANCELED = 'CANCELED',
+}

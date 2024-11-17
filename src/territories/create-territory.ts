@@ -10,10 +10,7 @@ const createTerritory = async (req: RequestWithUserAndBody<ICreateTerritoryPaylo
 
   const existingTerritory = await prisma.territory.findUnique({
     where: {
-      userId_name: {
-        userId: req.user.id,
-        name: req.body.name,
-      },
+      name: req.body.name,
     },
     select: { id: true },
   });
@@ -24,7 +21,6 @@ const createTerritory = async (req: RequestWithUserAndBody<ICreateTerritoryPaylo
 
   const territory = await prisma.territory.create({
     data: {
-      userId: req.user.id,
       name: req.body.name,
     },
     select: {

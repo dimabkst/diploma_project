@@ -13,16 +13,11 @@ const updateTerritory = async (req: RequestWithUser, res: Response) => {
     },
     select: {
       id: true,
-      userId: true,
     },
   });
 
   if (!territory) {
     throw new HttpError(404, 'Territory cannot be found');
-  }
-
-  if (territory.userId !== req.user.id) {
-    throw new HttpError(403, 'Cannot delete this territory');
   }
 
   const updated = await prisma.territory.update({

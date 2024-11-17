@@ -9,9 +9,9 @@ import { checkAuth } from '../auth/services';
 
 const territories: Router = Router();
 
-territories.post('/', checkAuth(), validation(createSchema), createTerritory);
+territories.post('/', checkAuth({ superAdminOnly: true }), validation(createSchema), createTerritory);
 territories.get('/', checkAuth(), validation(getSchema), getTerritories);
-territories.put('/:id', checkAuth(), validation(updateSchema), updateTerritory);
-territories.delete('/:id', checkAuth(), validation(deleteSchema), deleteTerritory);
+territories.put('/:id', checkAuth({ superAdminOnly: true }), validation(updateSchema), updateTerritory);
+territories.delete('/:id', checkAuth({ superAdminOnly: true }), validation(deleteSchema), deleteTerritory);
 
 export default territories;

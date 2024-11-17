@@ -4,17 +4,15 @@ import { Response } from 'express';
 import { IGetTerritoriesQuery } from './types';
 import { RequestWithUser } from '../utils/types';
 import searchPayload from '../utils/search';
-import handleRequest, { checkUserInRequest } from '../utils/request';
 import { offsetPaginate } from '../utils/pagination';
+import handleRequest, { checkUserInRequest } from '../utils/request';
 
 const getTerritories = async (req: RequestWithUser<IGetTerritoriesQuery>, res: Response) => {
   checkUserInRequest(req.user);
 
   const pagination = offsetPaginate(req.query.limit, req.query.page);
 
-  const filter: Prisma.TerritoryWhereInput = {
-    userId: req.user.id,
-  };
+  const filter: Prisma.TerritoryWhereInput = {};
 
   if (req.query.search) {
     filter.name = searchPayload(req.query.search);
@@ -26,7 +24,7 @@ const getTerritories = async (req: RequestWithUser<IGetTerritoriesQuery>, res: R
 
   const getQuery = prisma.territory.findMany({
     where: filter,
-    select: { id: true, name: true, _count: { select: { customer: true } } },
+    select: { id: true, name: true },
     ...pagination,
     orderBy: [{ name: req.query.sort_name || 'asc' }, { id: 'asc' }],
   });
