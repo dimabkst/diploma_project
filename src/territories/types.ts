@@ -1,6 +1,6 @@
-import { ICursorPaginationQuery, SortQuery } from '../utils/types';
+import { IOffsetPaginationQuery, SortQuery } from '../utils/types';
 
-export interface IGetTerritoriesQuery extends ICursorPaginationQuery {
+export interface IGetTerritoriesQuery extends IOffsetPaginationQuery {
   search?: string;
   sort_name?: SortQuery;
 }

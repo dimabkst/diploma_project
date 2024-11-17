@@ -30,7 +30,7 @@ export interface ICursorPaginationQuery {
   cursor?: string;
 }
 
-export interface IPagination {
+export interface IOffsetPagination {
   take?: number;
   skip?: number;
 }
