@@ -1,14 +1,12 @@
 require('dotenv').config();
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import prisma from './db';
-import { checkAuth } from './auth/services';
-import { RequestWithUser } from './utils/types';
 import logger from './utils/logger';
 
-import auth from './auth';
 import api from './api';
+import ssr from './ssr';
 
 const { PORT } = process.env;
 
@@ -23,21 +21,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.use(auth);
 app.use('/api', api);
-
-// TODO: change this logic or fix multiple renderings on client after redirect to login or remove all ssr routes
-// or fix toasts when rerendering page
-app.get('/', checkAuth({ allowUnauthenticated: true }), (req: RequestWithUser, res: Response) => {
-  if (!req.user) {
-    return res.redirect('/login');
-  }
-  return res.render('index');
-});
-
-app.get('*', (req: Request, res: Response) => {
-  return res.render('layout');
-});
+app.use(ssr);
 
 const connectDb = async () => {
   await prisma.$connect();

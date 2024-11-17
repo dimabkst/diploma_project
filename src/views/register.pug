@@ -5,7 +5,7 @@ block content
 
   .register-container 
     h2.register-h2 Register
-    form(id='register-form', class='register-form', hx-post='/register', hx-target='this', hx-swap='none')
+    form(id='register-form', class='register-form', hx-post='/api/auth/register', hx-target='this', hx-swap='none')
       .register-form-group
         input(class='register-input', type='text', name='name', required, placeholder='Name')
       .register-form-group
