@@ -23,7 +23,7 @@ html(lang="en")
           ul.header-menu
             .header-menu-left
               li.header-menu-item
-                a(href='/')
+                a.header-menu-item-anchor.header-icon-anchor(data-route href='/')
                   //- TODO: add another icon, adjust it so header height is not changed
                   img.header-icon(src='/images/icons/favicon-32x32.png' alt='Home Icon')
               block header-menu-left
@@ -34,7 +34,7 @@ html(lang="en")
 
       block header
 
-    main
+    main#app-root
       block content
     
     footer
@@ -47,3 +47,4 @@ html(lang="en")
         span#toast-message
 
     script(type="module", src="/js/main.js")
+    script(src="https://unpkg.com/htmx.org@2.0.2")

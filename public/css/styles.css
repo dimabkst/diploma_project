@@ -2,6 +2,7 @@
     --header-height: 72px;
     --header-padding: 25px;
     --app-text-color: #6a6a6a;
+    --app-logo-color: #5500aa;
 }
 
 * {
@@ -9,11 +10,45 @@
     box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
 body {
-    margin: 0; /* Remove default margin */
+    margin: 0;
+    padding: 0;
+    height: 100%;
     background-color: #f5f5f5;
     overflow-x: hidden; /* Prevent horizontal scroll */
-    padding: var(--header-padding);
-    padding-top: 0;
-    margin-top: var(--header-height) /* Dynamic margin based on header size */
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    flex-shrink: 0;
+}
+
+#app-root {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+footer {
+    flex-shrink: 0;
+    margin:0;
+    padding: 0 var(--header-padding);
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: white;
+    border-top: 1px solid #dcdcdc;
+    font-size: 14px;
+    color: var(--app-text-color);
 }

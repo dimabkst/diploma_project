@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { IPagination, ICursorPagination } from './types';
+import { IOffsetPagination, ICursorPagination } from './types';
 
 export const offsetPaginationPartialSchema: Joi.PartialSchemaMap = {
   limit: Joi.number().integer().positive().allow(''),
@@ -11,8 +11,8 @@ export const cursorPaginationPartialSchema: Joi.PartialSchemaMap = {
   cursor: Joi.number().integer().positive().allow(''), // TODO: change if use string ids etc
 };
 
-export const paginate = (limit: number | string | undefined, page: number | string | undefined): IPagination => {
-  const pagination: IPagination = {};
+export const offsetPaginate = (limit: number | string | undefined, page: number | string | undefined): IOffsetPagination => {
+  const pagination: IOffsetPagination = {};
 
   if (limit) {
     Object.assign(pagination, {

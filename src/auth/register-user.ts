@@ -8,12 +8,16 @@ import { setRedirectHeader } from '../utils/response';
 import handleRequest from '../utils/request';
 
 const registerUser = async ({ body }: RequestWithBody<IRegisterUserPayload>, res: Response) => {
-  const { name, email, password } = body;
+  const { name, email, password, repeatPassword } = body;
 
   const existingUser = await prisma.user.count({ where: { email } });
 
   if (existingUser) {
     throw new HttpError(400, 'User already exists');
+  }
+
+  if (password !== repeatPassword) {
+    throw new HttpError(400, 'Passwords do not match');
   }
 
   const hashedPassword = await hashPassword(password);

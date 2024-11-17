@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { RequestWithUser } from '../utils/types';
 import { setRedirectHeader } from '../utils/response';
 
-const getLoginPage = async (req: RequestWithUser, res: Response) => {
+const getRegistrationPage = async (req: RequestWithUser, res: Response) => {
   if (req.user) {
     setRedirectHeader(res, '/');
 
@@ -12,4 +12,4 @@ const getLoginPage = async (req: RequestWithUser, res: Response) => {
   return res.render('register');
 };
 
-export default getLoginPage;
+export default getRegistrationPage;

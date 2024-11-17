@@ -1,19 +1,20 @@
 extends auth-layout
 
 block content
-  h1 Register
-  form(id='register-form', hx-post='/register', hx-target='this', hx-swap='none')
-    label(for='name') Name:
-    input(type='text', name='name', required)
-    br
-    label(for='email') Email:
-    input(type='text', name='email', required)
-    br
-    label(for='password') Password:
-    input(type='password', name='password', required)
-    br
-    button(type='submit') Register
-  if error
-    p.error= error
+  link(rel="stylesheet" href="/css/register.css")
 
-  script(src="https://unpkg.com/htmx.org@2.0.2")
+  .register-container 
+    h2.register-h2 Register
+    form(id='register-form', class='register-form', hx-post='/register', hx-target='this', hx-swap='none')
+      .register-form-group
+        input(class='register-input', type='text', name='name', required, placeholder='Name')
+      .register-form-group
+        input(class='register-input', type='email', name='email', required, placeholder='Email')
+      .register-form-group
+        input(class='register-input', id='password', type='password', name='password', pattern='^(?=.*[A-Z])(?=.*\\d).{8,}$', required, minlength='8', title='Password must be at least 8 characters long, contain at least 1 uppercase letter, and 1 number', autocomplete='new-password', placeholder='Password')
+      .register-form-group
+        input(class='register-input', id='repeat-password', type='password', name='repeatPassword', required, placeholder='Repeat password')
+      button(type='submit' class='register-button') Register
+    if error
+      p.error= error
+

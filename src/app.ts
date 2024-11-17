@@ -3,10 +3,12 @@ import express, { Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import prisma from './db';
+import { checkAuth } from './auth/services';
+import { RequestWithUser } from './utils/types';
 import logger from './utils/logger';
 
 import auth from './auth';
-import territories from './territories';
+import api from './api';
 
 const { PORT } = process.env;
 
@@ -21,17 +23,21 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.get('/', (req: Request, res: Response) => {
+app.use(auth);
+app.use('/api', api);
+
+// TODO: change this logic or fix multiple renderings on client after redirect to login or remove all ssr routes
+// or fix toasts when rerendering page
+app.get('/', checkAuth({ allowUnauthenticated: true }), (req: RequestWithUser, res: Response) => {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
   return res.render('index');
 });
 
-app.post('/submit', (req: Request, res: Response) => {
-  const { name } = req.body;
-  return res.send(`<div>Hello, ${name}!</div>`);
+app.get('*', (req: Request, res: Response) => {
+  return res.render('layout');
 });
-
-app.use(auth);
-app.use('/territories', territories);
 
 const connectDb = async () => {
   await prisma.$connect();

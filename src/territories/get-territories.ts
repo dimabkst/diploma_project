@@ -5,12 +5,12 @@ import { IGetTerritoriesQuery } from './types';
 import { RequestWithUser } from '../utils/types';
 import searchPayload from '../utils/search';
 import handleRequest, { checkUserInRequest } from '../utils/request';
-import { cursorPaginate } from '../utils/pagination';
+import { offsetPaginate } from '../utils/pagination';
 
 const getTerritories = async (req: RequestWithUser<IGetTerritoriesQuery>, res: Response) => {
   checkUserInRequest(req.user);
 
-  const pagination = cursorPaginate(req.query.limit, req.query.cursor);
+  const pagination = offsetPaginate(req.query.limit, req.query.page);
 
   const filter: Prisma.TerritoryWhereInput = {
     userId: req.user.id,

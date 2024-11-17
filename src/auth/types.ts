@@ -10,6 +10,7 @@ export interface IRegisterUserPayload {
   name: string;
   email: string;
   password: string;
+  repeatPassword: string;
 }
 
 export interface ITokenData {

@@ -1,14 +1,13 @@
 extends auth-layout
 
 block content
-  h1 Login
-  form(id='login-form', hx-post='/login', hx-target='this', hx-swap='none')
-    label(for='email') Email:
-    input(type='text', name='email', required)
-    br
-    label(for='password') Password:
-    input(type='password', name='password', required)
-    br
-    button(type='submit') Login
+  link(rel="stylesheet" href="/css/login.css")
 
-  script(src="https://unpkg.com/htmx.org@2.0.2")
+  .login-container
+    h2.login-h2 Login
+    form(class='login-form' hx-post='/login', hx-target='this', hx-swap='none')
+      .login-form-group
+        input(class='login-input', type='email', name='email', required, placeholder='Email')
+      .login-form-group
+        input(class='login-input', type='password', name='password', required, autocomplete='current-password', placeholder='Password')
+      button(type='submit' class='login-button') Log In
