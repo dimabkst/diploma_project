@@ -1,9 +1,14 @@
+import { getProductsPage, productsPageTriggers } from './products.js';
 import { getTerritoriesPage, territoriesPageTriggers } from './territories.js';
 
 const routes = {
   '/territories': {
     template: getTerritoriesPage,
     triggers: territoriesPageTriggers,
+  },
+  '/products': {
+    template: getProductsPage,
+    triggers: productsPageTriggers,
   },
 };
 

@@ -1,24 +1,27 @@
 .header-nav {
-    width: 100%; 
-    height: var(--header-height);
+    width: 100%;
+    height: 100%;
     padding: 0 var(--header-padding);
     background-color: white;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10; /* Header is above other content */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4); /* Small shadow at the bottom */
+    position: relative;
+    /* Header is above other content */
+    z-index: 10;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .header-menu {
     height: 100%;
     width: 100%;
     padding: 0;
-    margin: 0; 
-    list-style-type: none; /* Remove default list styles */
-    display: flex; /* Align items in a row */
-    align-items: center; /* Align items vertically in the center */
-    justify-content: space-between; /* Distribute space between items */
+    margin: 0;
+    /* Remove default list styles */
+    list-style-type: none;
+    /* Align items in a row */
+    display: flex;
+    /* Align items vertically in the center */
+    align-items: center;
+    /* Distribute space between items */
+    justify-content: space-between;
 }
 
 .header-menu-left {
@@ -49,17 +52,21 @@
 
 .header-menu-item-anchor {
     padding: 0 10px;
-    margin-right: -1px; /* Prevents thicker borders for neighbour elements */
-    height: 100%; /* Ensure the button takes full height */
-    text-decoration: none; /* Remove underline */
-    color: var(--app-text-color); /* Text color */
+    /* Prevents thicker borders for neighbour elements */
+    margin-right: -1px;
+    height: 100%;
+    /* Remove underline */
+    text-decoration: none;
+    color: var(--app-text-color);
     font-weight: bold;
-    border-left: 1px solid #e0e0e0; /* Vertical line between items */
-    border-right: 1px solid #e0e0e0; /* Vertical line between items */
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Vertically center text inside buttons */
-    justify-content: center; /* Center content horizontally */
+    /* Vertically center text inside buttons */
+    align-items: center;
+    /* Center content horizontally */
+    justify-content: center;
 }
 
 .header-menu-item-anchor:hover {
@@ -77,7 +84,8 @@
 .header-icon {
     width: 32px;
     height: auto;
-    vertical-align: middle; /* Align with text */
+    /* Align with text */
+    vertical-align: middle;
 }
 
 .header-button {
@@ -90,7 +98,8 @@
     text-align: center;
     cursor: pointer;
     display: inline-block;
-    white-space: nowrap; /* Prevent text from breaking into multiple lines */
+    /* Prevent text from breaking into multiple lines */
+    white-space: nowrap;
 }
 
 .button-signout {

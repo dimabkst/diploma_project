@@ -1,4 +1,5 @@
 :root {
+    --footer-height: 28px;
     --header-height: 72px;
     --header-padding: 25px;
     --app-text-color: #6a6a6a;
@@ -7,7 +8,8 @@
 
 * {
     font-family: 'Open Sans', sans-serif;
-    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    /* Include padding and border in element's total width and height */
+    box-sizing: border-box;
 }
 
 html {
@@ -21,13 +23,15 @@ body {
     padding: 0;
     height: 100%;
     background-color: #f5f5f5;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    /* Prevent horizontal scroll */
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
 }
 
 header {
     flex-shrink: 0;
+    height: var(--header-height);
 }
 
 #app-root {
@@ -41,9 +45,9 @@ header {
 
 footer {
     flex-shrink: 0;
-    margin:0;
+    margin: 0;
     padding: 0 var(--header-padding);
-    height: 28px;
+    height: var(--footer-height);
     display: flex;
     align-items: center;
     justify-content: flex-end;
