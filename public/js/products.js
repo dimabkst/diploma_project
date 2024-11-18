@@ -11,9 +11,9 @@ export function getProductsPage() {
           <div class="total-products">Total Products: 123</div>
 
           <div class="search-sorting">
-              <input type="text" id="search" placeholder="Search products..." />
+              <input type="text" id="search" class="search" placeholder="Search products..." />
 
-              <select id="sort">
+              <select id="sorting" class="sorting">
                   <option value="name">Sort by Name</option>
                   <option value="price">Sort by Price</option>
               </select>
@@ -96,7 +96,7 @@ function addEventListeners() {
     fetchProducts();
   });
 
-  document.getElementById('sort').addEventListener('change', (event) => {
+  document.getElementById('sorting').addEventListener('change', (event) => {
     filters.sort = event.target.value;
     fetchProducts();
   });

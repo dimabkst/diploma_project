@@ -22,7 +22,6 @@
     align-items: center;
     padding-bottom: 16px;
     border-bottom: 1px solid #ccc;
-
 }
 
 .total-products {
@@ -35,8 +34,30 @@
 .search-sorting {
     grid-column: 2 / -1;
     display: flex;
-    gap: 8px;
+    gap: 16px;
+}
+
+.search {
     width: 100%;
+    padding: 10px;
+}
+
+.sorting {
+    padding: 0 10px;
+}
+
+.search,
+.sorting {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    height: 35px;
+}
+
+.search:hover,
+.sorting:hover {
+    border-color: black;
 }
 
 /* second row */
