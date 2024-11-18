@@ -7,7 +7,7 @@ import handleRequest from '../utils/request';
 import searchPayload from '../utils/search';
 import { RequestWithQuery } from '../utils/types';
 
-const getProducts = async (req: RequestWithQuery<IGetProductsQuery>, res: Response) => {
+export const getProductsService = async (req: RequestWithQuery<IGetProductsQuery>) => {
   const pagination = offsetPaginate(req.query.limit, req.query.page);
 
   const filter: Prisma.ProductWhereInput = {};
@@ -22,14 +22,19 @@ const getProducts = async (req: RequestWithQuery<IGetProductsQuery>, res: Respon
 
   const getQuery = prisma.product.findMany({
     where: filter,
-    select: { id: true, name: true },
+    select: { id: true, name: true, description: true, price: true },
     ...pagination,
     orderBy: [{ name: req.query.sort_name || 'asc' }, { id: 'asc' }],
   });
 
   const [count, products] = await Promise.all([countQuery, getQuery]);
 
-  return res.status(200).json({ count, products });
+  return { count, products };
+};
+
+const getProducts = async (req: RequestWithQuery<IGetProductsQuery>, res: Response) => {
+  const result = await getProductsService(req);
+  return res.status(200).json(result);
 };
 
 export default handleRequest(getProducts);

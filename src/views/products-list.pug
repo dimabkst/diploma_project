@@ -1,0 +1,66 @@
+<div id="product-list" hx-get="/products?page=1" hx-trigger="load" hx-target="#product-list" hx-swap="innerHTML"></div>
+
+form(method='get' hx-get='/products' class='filter-form')
+  .filter
+    label(for='category') Category:
+    select(name='category')
+      option(value='') All
+      option(value='electronics') Electronics
+      option(value='fashion') Fashion
+      option(value='home') Home
+
+    //- label(for='minPrice') Min Price:
+    //- input(type='number' name='minPrice' placeholder='Min' value=filters.minPrice || '')
+
+    //- label(for='maxPrice') Max Price:
+    //- input(type='number' name='maxPrice' placeholder='Max' value=filters.maxPrice || '')
+
+  .sort
+    label(for='sort') Sort By:
+    select(name='sort')
+      option(value='price_asc' selected=(sort === 'price_asc')) Price: Low to High
+      option(value='price_desc' selected=(sort === 'price_desc')) Price: High to Low
+      option(value='name_asc' selected=(sort === 'name_asc')) Name: A to Z
+      option(value='name_desc' selected=(sort === 'name_desc')) Name: Z to A
+
+  button(type='submit') Apply
+
+
+div.product-grid
+  each product in products
+    div.card
+      if product.photos && product.photos.length > 0
+        img(src=product.photos[0].url, alt=product.name)
+      else
+        div.placeholder-image
+
+      h3= product.name
+      p Price: $#{product.price}
+      p= product.description || 'No description available'
+
+.pagination
+  if hasPreviousPage
+    button(hx-get=`/products?page=${page - 1}`, class='prev-page') Previous
+  else
+    button(class='prev-page' disabled) Previous
+
+  if page > 3
+    button(hx-get=`/products?page=1`) 1
+    if page > 4
+      span ... // Ellipses for skipped pages
+
+  each num in Array.from({ length: 5 }, (_, i) => page - 2 + i).filter(n => n > 0 && n <= totalPages)
+    if num === page
+      button(class='current-page' disabled)= num
+    else
+      button(hx-get=`/products?page=${num}`)= num
+
+  if page < totalPages - 2
+    if page < totalPages - 3
+      span ... // Ellipses for skipped pages
+    button(hx-get=`/products?page=${totalPages}`)= totalPages
+
+  if hasNextPage
+    button(hx-get=`/products?page=${page + 1}`, class='next-page') Next
+  else
+    button(class='next-page' disabled) Next

@@ -32,7 +32,7 @@ function executePageTriggers(path) {
 }
 
 export function isServerRenderedRoute(path) {
-  return ['/login', '/register', '/'].includes(path);
+  return ['/login', '/register', '/', '/products'].includes(path);
 }
 
 function handleRouteChange() {

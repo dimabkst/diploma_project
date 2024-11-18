@@ -9,8 +9,10 @@ import { checkAuth } from '../auth/services';
 
 const products: Router = Router();
 
+export const getProductsMiddlewares = [checkAuth(), validation(getSchema)];
+
 products.post('/', checkAuth({ superAdminOnly: true }), validation(createSchema), createProduct);
-products.get('/', checkAuth(), validation(getSchema), getProducts);
+products.get('/', ...getProductsMiddlewares, getProducts);
 products.put('/:id', checkAuth({ superAdminOnly: true }), validation(updateSchema), updateProduct);
 products.delete('/:id', checkAuth({ superAdminOnly: true }), validation(deleteSchema), deleteProduct);
 
