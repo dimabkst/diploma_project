@@ -7,8 +7,8 @@ export function getProductsPage() {
     <link rel="stylesheet" href="/css/pagination.css"/>
 
     <div id="products-block">
-      <div class="total-products-search-sorting">
-          <div class="total-products">Total Products: 123</div>
+      <div class="products-count-search-sorting">
+          <div id="products-count" class="products-count"></div>
 
           <div class="search-sorting">
               <input type="text" id="search" class="search" placeholder="Search products..." />
@@ -63,11 +63,14 @@ async function fetchProducts() {
 
   const totalPages = pagination.limit & data.count ? Math.ceil(data.count / pagination.limit) : 1;
 
-  renderProducts(data.products);
+  renderProducts(data.products, data.count);
   createPagination(pagination, totalPages, fetchProducts);
 }
 
-function renderProducts(products) {
+function renderProducts(products, count) {
+  const productsCount = document.getElementById('products-count');
+  productsCount.innerHTML = `Found products: ${count || 0}`;
+
   const productsList = document.getElementById('products-list');
   productsList.innerHTML = ''; // Clear existing products
 
