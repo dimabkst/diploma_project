@@ -14,8 +14,8 @@ export function getProductsPage() {
               <input type="text" id="search" class="search" placeholder="Search products..." />
 
               <select id="sorting" class="sorting">
-                  <option value="name">Sort by Name</option>
-                  <option value="price">Sort by Price</option>
+                  <option value="sort_name:asc">Name A-Z</option>
+                  <option value="sort_name:desc">Name Z-A</option>
               </select>
           </div>
       </div>
@@ -100,7 +100,8 @@ function addEventListeners() {
   });
 
   document.getElementById('sorting').addEventListener('change', (event) => {
-    filters.sort = event.target.value;
+    const [key, value] = event.target.value.split(':');
+    filters[key] = value;
     fetchProducts();
   });
 }
