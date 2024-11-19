@@ -79,11 +79,16 @@ function renderProducts(products, count) {
     return;
   }
 
+  const imagePlaceholder = productImagePlaceholder('product-item-image');
   products.forEach((product) => {
+    if (product.name === '1') {
+      product.image =
+        'https://firebasestorage.googleapis.com/v0/b/simply-depo-staging-media/o/converted%2FU63I2u8CaHa8T6EHCKEjDyAASiA2%2F1ad11a8071b2ae1f497b72efc352241adff74e713c6496d0291dcc90b86db010.png?alt=media&token=9fb0b719-ba39-4cf8-bdc1-2f2262524ba7';
+    }
     const productElement = document.createElement('div');
     productElement.classList.add('product-item');
     productElement.innerHTML = `
-      <img src="${product.image}" alt="${product.name}" />
+      ${product.image ? `<img class="product-item-image" src="${product.image}" alt="${product.name}" />` : imagePlaceholder}
       <h3 class="product-title">${product.name}</h3>
       <p class="product-price">$${product.price.toFixed(2)}</p>
       <button class="add-to-cart">Add to Cart</button>
@@ -104,4 +109,8 @@ function addEventListeners() {
     filters[key] = value;
     fetchProducts();
   });
+}
+
+function productImagePlaceholder(className = '') {
+  return `<svg ${className ? `class="${className}"` : ''} xmlns="http://www.w3.org/2000/svg" fill="#dbdbdb" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>`;
 }
