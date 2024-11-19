@@ -1,3 +1,4 @@
+import { cartPageTriggers, getCartPage } from './cart.js';
 import { getProductsPage, productsPageTriggers } from './products.js';
 import { getTerritoriesPage, territoriesPageTriggers } from './territories.js';
 
@@ -9,6 +10,10 @@ const routes = {
   '/products': {
     template: getProductsPage,
     triggers: productsPageTriggers,
+  },
+  '/cart': {
+    template: getCartPage,
+    triggers: cartPageTriggers,
   },
 };
 

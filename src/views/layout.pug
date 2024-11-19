@@ -15,5 +15,12 @@ block header-menu-left
 
 block header-menu-right
   li.header-menu-item
+    a.cart-button(data-route href='/cart')
+      //- span Cart
+      svg.cart-icon(viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg")
+        polyline(points="2 3 5 3 8.5 16 18 16 21 7 6.1 7")
+        line(x1="9.99" y1="20" x2="10.01" y2="20")
+        line(x1="15.99" y1="20" x2="16.01" y2="20")
+  li.header-menu-item
     form(id='logout-form', hx-post='/api/auth/logout', hx-target='this', hx-swap='none')
       button(type='submit', class='header-button button-signout') Sign Out

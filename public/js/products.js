@@ -1,5 +1,5 @@
 import { createPagination } from './pagination.js';
-import { customFetch } from './utils.js';
+import { customFetch, productImagePlaceholder } from './utils.js';
 
 export function getProductsPage() {
   return `
@@ -108,16 +108,6 @@ function renderProducts(products, count) {
   );
 }
 
-function addToCart(productsData) {
-  customFetch('/api/carts', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(productsData),
-  });
-}
-
 function addEventListeners() {
   document.getElementById('search').addEventListener('input', (event) => {
     filters.search = event.target.value;
@@ -132,6 +122,12 @@ function addEventListeners() {
   });
 }
 
-function productImagePlaceholder(className = '') {
-  return `<svg ${className ? `class="${className}"` : ''} xmlns="http://www.w3.org/2000/svg" fill="#dbdbdb" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>`;
+function addToCart(productsData) {
+  return customFetch('/api/carts', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(productsData),
+  });
 }

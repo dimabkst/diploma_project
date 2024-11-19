@@ -1,6 +1,9 @@
 export const assignCartTotalAmountInfo = (cart: {
   totalAmount?: number;
-  cartProducts: { quantity: number; product: { price: number } }[];
+  cartProducts: { totalAmount?: number; quantity: number; product: { price: number } }[];
 }) => {
-  cart.totalAmount = cart.cartProducts.reduce((sum, c) => sum + c.quantity * c.product.price, 0);
+  cart.totalAmount = cart.cartProducts.reduce((sum, cp) => {
+    cp.totalAmount = cp.quantity * cp.product.price;
+    return sum + cp.totalAmount;
+  }, 0);
 };

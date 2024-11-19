@@ -13,5 +13,8 @@ export const cartView = {
         },
       },
     },
+    orderBy: {
+      id: 'asc',
+    },
   },
 } satisfies Prisma.CartSelect;
