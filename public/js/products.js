@@ -91,9 +91,30 @@ function renderProducts(products, count) {
       ${product.image ? `<img class="product-item-image" src="${product.image}" alt="${product.name}" />` : imagePlaceholder}
       <h3 class="product-title">${product.name}</h3>
       <p class="product-price">$${product.price.toFixed(2)}</p>
-      <button class="add-to-cart">Add to Cart</button>
+      <button class="add-to-cart" product-id="${product.id}">Add to Cart</button>
     `;
     productsList.appendChild(productElement);
+  });
+
+  document.querySelectorAll('.add-to-cart').forEach((button) =>
+    button.addEventListener('click', function (event) {
+      addToCart([
+        {
+          productId: Number(event.target.getAttribute('product-id')),
+          quantity: 1,
+        },
+      ]);
+    })
+  );
+}
+
+function addToCart(productsData) {
+  customFetch('/api/carts', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(productsData),
   });
 }
 

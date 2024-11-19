@@ -2,8 +2,8 @@ import { showToast } from './toasts.js';
 
 const defaultErrorMessage = 'Something went wrong';
 
-export function toastError(err) {
-  const errorMessage = err?.body?.message || err?.statusText || err?.message || err || defaultErrorMessage;
+export async function toastError(err) {
+  const errorMessage = (await err?.json())?.message || err?.statusText || err?.message || err || defaultErrorMessage;
 
   return showToast(errorMessage, 'error');
 }

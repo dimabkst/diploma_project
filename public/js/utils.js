@@ -19,7 +19,7 @@ export async function customFetch(url, options = {}) {
 
     return response;
   } catch (e) {
-    toastError(e);
+    await toastError(e);
 
     return null;
   }
