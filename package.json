@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node dist/src/app.js",
     "dev": "nodemon --watch src --ext ts --exec ts-node src/app.ts",
+    "prebuild": "rimraf dist",
     "build": "tsc",
+    "postbuild": "copyfiles public/**/* src/views/* dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "prisma": {
@@ -33,12 +35,14 @@
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^22.5.4",
+    "copyfiles": "^2.4.1",
     "eslint": "^9.10.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "nodemon": "^3.1.4",
     "prettier": "^3.3.3",
     "prisma": "^5.19.1",
+    "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.4.0"
