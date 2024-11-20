@@ -79,6 +79,7 @@
     outline: none;
     height: auto;
     width: auto;
+    border: none;
 }
 
 .header-icon {
