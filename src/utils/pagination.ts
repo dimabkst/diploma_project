@@ -2,13 +2,13 @@ import Joi from 'joi';
 import { IOffsetPagination, ICursorPagination } from './types';
 
 export const offsetPaginationPartialSchema: Joi.PartialSchemaMap = {
-  limit: Joi.number().integer().positive().allow(''),
-  page: Joi.number().integer().positive().allow(''),
+  limit: Joi.number().integer().positive().integer().allow(''),
+  page: Joi.number().integer().positive().integer().allow(''),
 };
 
 export const cursorPaginationPartialSchema: Joi.PartialSchemaMap = {
-  limit: Joi.number().integer().positive().allow(''),
-  cursor: Joi.number().integer().positive().allow(''), // TODO: change if use string ids etc
+  limit: Joi.number().integer().positive().integer().allow(''),
+  cursor: Joi.number().integer().positive().integer().allow(''), // TODO: change if use string ids etc
 };
 
 export const offsetPaginate = (limit: number | string | undefined, page: number | string | undefined): IOffsetPagination => {

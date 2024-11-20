@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { Prisma } from '@prisma/client';
 import { IGetProductsQuery } from './types';
 import prisma from '../db';
+import { HttpError } from '../utils/error';
 import { offsetPaginate } from '../utils/pagination';
 import handleRequest from '../utils/request';
 import searchPayload from '../utils/search';
@@ -11,6 +12,42 @@ const getProducts = async (req: RequestWithQuery<IGetProductsQuery>, res: Respon
   const pagination = offsetPaginate(req.query.limit, req.query.page);
 
   const filter: Prisma.ProductWhereInput = {};
+
+  if (req.query.category_ids?.length) {
+    filter.productCategoryId = { in: req.query.category_ids };
+  }
+  if (req.query.category_id) {
+    filter.productCategoryId = Number(req.query.category_id);
+  }
+
+  if (req.query.manufacturer_ids?.length) {
+    filter.manufacturerId = { in: req.query.manufacturer_ids };
+  }
+  if (req.query.manufacturer_id) {
+    filter.manufacturerId = Number(req.query.manufacturer_id);
+  }
+
+  if (req.query.countries_of_origin?.length) {
+    filter.countryOfOrigin = { in: req.query.countries_of_origin };
+  }
+  if (req.query.country_of_origin) {
+    filter.countryOfOrigin = req.query.country_of_origin;
+  }
+
+  if (req.query.price_gte || req.query.price_lte) {
+    if (req.query.price_gte && req.query.price_lte) {
+      throw new HttpError(400, 'Invalid price thresholds');
+    }
+
+    filter.AND = [];
+
+    if (req.query.price_gte) {
+      filter.AND.push({ price: { gte: Number(req.query.price_gte) } });
+    }
+    if (req.query.price_lte) {
+      filter.AND.push({ price: { lte: Number(req.query.price_lte) } });
+    }
+  }
 
   if (req.query.search) {
     filter.name = searchPayload(req.query.search);

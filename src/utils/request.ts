@@ -73,3 +73,26 @@ const handleRequest = (
 };
 
 export default handleRequest;
+
+export const parseJsonParams = (location: 'query' | 'body', keys: string[]) => {
+  return handleRequest(async (req: Request, res: Response, next?: NextFunction) => {
+    keys.forEach((key) => {
+      if (req[location][key] && typeof req[location][key] === 'string') {
+        try {
+          req[location][key] = JSON.parse(req[location][key]);
+        } catch (e) {
+          if (e instanceof SyntaxError) {
+            throw new HttpError(422, `"query.${key}" must be valid json`);
+          }
+          throw new HttpError(500, 'Failed to parse json params');
+        }
+      } else {
+        delete req[location][key];
+      }
+    });
+
+    if (next) {
+      next();
+    }
+  });
+};

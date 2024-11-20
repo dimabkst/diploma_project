@@ -47,24 +47,16 @@ model User {
 
 model Manufacturer {
   id            Int            @id @default(autoincrement())
-  name          String         @db.Citext
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @default(now()) @updatedAt
+  name          String         @unique @db.Citext
   products      Product[]
   orderProducts OrderProduct[]
-
-  @@unique(name)
 }
 
 model ProductCategory {
-  id               Int               @id @default(autoincrement())
-  name             String            @unique @db.Citext
-  depthIndex       Int               @default(0)
-  parentCategoryId Int?
-  parentCategory   ProductCategory?  @relation("NestedCategory", fields: [parentCategoryId], references: [id], onDelete: Cascade)
-  childCategories  ProductCategory[] @relation("NestedCategory")
-  products         Product[]
-  orderProduct     OrderProduct[]
+  id           Int            @id @default(autoincrement())
+  name         String         @unique @db.Citext
+  products     Product[]
+  orderProduct OrderProduct[]
 }
 
 model Product {
