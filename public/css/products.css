@@ -155,7 +155,7 @@
     grid-column: 1;
     font-size: 16px;
     font-weight: bold;
-    color: #007bff;
+    color: var(--app-logo-color);
     margin: 0;
     display: flex;
     align-items: center;
@@ -164,7 +164,7 @@
 .add-to-cart {
     grid-row: 3;
     grid-column: 3;
-    background-color: #007bff;
+    background-color: var(--app-logo-color);
     color: white;
     border: none;
     border-radius: 4px;
@@ -175,7 +175,7 @@
 }
 
 .add-to-cart:hover {
-    background-color: #0056b3;
+    background-color: var(--darkened-app-logo-color);
 }
 
 .pagination-row {

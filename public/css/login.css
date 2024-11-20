@@ -46,8 +46,8 @@
   }
 
   .login-input:focus {
-    border-color: #5500aa;
-    outline: solid 1px #5500aa;
+    border-color: var(--darkened-app-logo-color);
+    outline: solid 1px var(--darkened-app-logo-color);
   }
 
   .login-input::placeholder {

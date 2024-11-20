@@ -3,7 +3,8 @@
     --header-height: 72px;
     --header-padding: 25px;
     --app-text-color: #6a6a6a;
-    --app-logo-color: #5500aa;
+    --app-logo-color: #007bff;
+    --darkened-app-logo-color: #0056b3;
 }
 
 * {
