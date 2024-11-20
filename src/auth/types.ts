@@ -1,4 +1,4 @@
-import { UserRole } from '../db/types';
+import { UserRole } from '@prisma/client';
 
 export interface ILoginUserPayload {
   email: string;
