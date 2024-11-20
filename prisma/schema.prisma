@@ -8,40 +8,40 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   name      String
-  email     String    @unique
+  email     String   @unique
   password  String
-  role      String    @default("USER")
-  userRole  UserRole  @relation(fields: [role], references: [role])
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now()) @updatedAt
+  role      String   @default("USER")
+  userRole  UserRole @relation(fields: [role], references: [role])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   cart      Cart?
-  contacts  Contact[]
+  // contacts  Contact[]
   orders    Order[]
 }
 
-model Contact {
-  id             Int                @id @default(autoincrement())
-  name           String
-  defaultContact Boolean            @default(false)
-  phone          String?
-  email          String?
-  userId         Int
-  user           User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  duplicates     ContactDuplicate[]
-}
+// model Contact {
+//   id             Int                @id @default(autoincrement())
+//   name           String
+//   defaultContact Boolean            @default(false)
+//   phone          String?
+//   email          String?
+//   userId         Int
+//   user           User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   duplicates     ContactDuplicate[]
+// }
 
-model ContactDuplicate {
-  id        Int      @id @default(autoincrement())
-  name      String
-  phone     String?
-  email     String?
-  orderId   Int?     @unique
-  order     Order?   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  contactId Int?
-  contact   Contact? @relation(fields: [contactId], references: [id])
-}
+// model ContactDuplicate {
+//   id        Int      @id @default(autoincrement())
+//   name      String
+//   phone     String?
+//   email     String?
+//   orderId   Int?     @unique
+//   order     Order?   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+//   contactId Int?
+//   contact   Contact? @relation(fields: [contactId], references: [id])
+// }
 
 model Manufacturer {
   id            Int            @id @default(autoincrement())
@@ -130,19 +130,19 @@ model OrderProduct {
 }
 
 model Order {
-  id               Int               @id @default(autoincrement())
-  status           String            @default("PENDING")
-  orderStatus      OrderStatus       @relation(fields: [status], references: [status])
-  totalAmount      Float             @default(0)
-  cancelReason     String?
-  canceledAt       DateTime?
-  completedAt      DateTime?
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @default(now()) @updatedAt
-  userId           Int?
-  user             User?             @relation(fields: [userId], references: [id])
-  contactDuplicate ContactDuplicate?
-  products         OrderProduct[]
+  id           Int            @id @default(autoincrement())
+  status       String         @default("PENDING")
+  orderStatus  OrderStatus    @relation(fields: [status], references: [status])
+  totalAmount  Float          @default(0)
+  cancelReason String?
+  canceledAt   DateTime?
+  completedAt  DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now()) @updatedAt
+  userId       Int?
+  user         User?          @relation(fields: [userId], references: [id])
+  // contactDuplicate ContactDuplicate?
+  products     OrderProduct[]
   // shippedAt           DateTime?
   // paidAt              DateTime?
   // paymentStatus       String              @default("PENDING")
@@ -152,11 +152,6 @@ model Order {
   // orderDelivery                OrderDelivery?
   // deliveryFee      Float             @default(0)
   // orderPayment                  OrderPayment?
-}
-
-model Territory {
-  id   Int    @id @default(autoincrement())
-  name String @unique
 }
 
 // enums
