@@ -53,6 +53,7 @@
 }
 
 .pagination-row {
+    margin-top: auto;
     border-top: 1px solid #ddd;
     padding: 16px;
 }
