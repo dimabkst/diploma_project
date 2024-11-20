@@ -2,10 +2,12 @@ import { Request, Response, NextFunction } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { RequestWithUser } from './types';
 import { HttpError } from './error';
-import { setRedirectHeader } from './response';
 import logger from './logger';
+import { setRedirectHeader } from './response';
+import { RequestWithUser } from './types';
+import { saveLog } from './logs';
+import { LogLevel } from '@prisma/client';
 
 export function checkUserInRequest(user: RequestWithUser['user']): asserts user is Required<RequestWithUser>['user'] {
   if (!user) {
@@ -16,7 +18,7 @@ export function checkUserInRequest(user: RequestWithUser['user']): asserts user 
 const handleRequest = (
   handler: (req: Request<ParamsDictionary, any, any, any>, res: Response, next?: NextFunction) => Promise<any>
 ) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+  return async (req: RequestWithUser, res: Response, next: NextFunction) => {
     try {
       await handler(req, res, next);
     } catch (e) {
@@ -30,37 +32,42 @@ const handleRequest = (
         }
       }
 
+      const errorData: { message: string; status: number; context?: any } = {
+        message: (e as Error)?.message,
+        status: 500,
+        context: {
+          userId: req.user?.id,
+          method: req.method,
+          url: req.originalUrl,
+          body: req.body,
+          stackTrace: (e as Error)?.stack,
+        },
+      };
+
       if (e instanceof HttpError) {
-        const payload = {
-          ...e.meta,
-          message: e.message,
-        };
-
-        return res.status(e.status).json(payload);
+        errorData.status = e.status;
+        errorData.message = e.message;
       }
-
-      logger.error(`${req.method} ${req.originalUrl} endpoint hit`);
 
       if (e instanceof PrismaClientKnownRequestError) {
         if (e.code === 'P2002') {
-          return res.status(422).json({
-            uniqueError: true,
-            message: 'Unique constraint failed',
-          });
+          errorData.status = 422;
+          errorData.message = 'Unique constraint failed';
+        } else if (e.code === 'P2003' || e.code === 'P2025') {
+          errorData.status = 404;
+          errorData.message = e.code === 'P2003' ? 'Not found' : e.message;
+        } else {
+          errorData.status = 502;
+          errorData.message = 'Database error';
         }
-
-        if (e.code === 'P2003' || e.code === 'P2025') {
-          return res.status(404).json({
-            message: e.code === 'P2003' ? 'Not found' : e.message,
-          });
-        }
-
-        logger.error(e);
-        return res.status(502).json({ message: 'Database error' });
       }
 
+      await saveLog({ ...errorData, level: LogLevel.ERROR });
+
+      logger.error(`${req.method} ${req.originalUrl} endpoint hit`);
       logger.error(e);
-      return res.status(500).json({ error: (e as Error).message });
+
+      return res.status(errorData.status).json({ message: errorData.message });
     }
   };
 };
