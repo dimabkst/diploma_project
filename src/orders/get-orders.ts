@@ -1,8 +1,7 @@
 import { Response } from 'express';
-import { Prisma } from '@prisma/client';
+import { Prisma, UserRole } from '@prisma/client';
 import { IGetOrdersQuery } from './types';
 import prisma from '../db';
-import { UserRole } from '../db/types';
 import { offsetPaginate } from '../utils/pagination';
 import handleRequest, { checkUserInRequest } from '../utils/request';
 import { RequestWithUser } from '../utils/types';

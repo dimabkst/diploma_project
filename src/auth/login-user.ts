@@ -1,8 +1,8 @@
 import { Response } from 'express';
+import { UserRole } from '@prisma/client';
 import { ILoginUserPayload } from './types';
 import { comparePassword, generateToken } from './services';
 import prisma from '../db';
-import { UserRole } from '../db/types';
 import { RequestWithBody } from '../utils/types';
 import { HttpError } from '../utils/error';
 import { setRedirectHeader } from '../utils/response';

@@ -59,6 +59,11 @@ function renderOrdersList(ordersData) {
   const ordersList = document.getElementById('orders-list');
   ordersList.innerHTML = '';
 
+  if (ordersData.orders?.length === 0) {
+    ordersList.innerHTML = '<p class="orders-list-item">No orders placed yet</p>';
+    return;
+  }
+
   ordersData.orders?.forEach((order) => {
     const orderElement = document.createElement('div');
     orderElement.classList.add('orders-list-item');

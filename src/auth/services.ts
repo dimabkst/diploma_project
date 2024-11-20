@@ -1,9 +1,9 @@
 import bcrypt from 'bcryptjs';
 import { JsonWebTokenError, sign, SignOptions, TokenExpiredError, verify } from 'jsonwebtoken';
 import { NextFunction, Response } from 'express';
+import { UserRole } from '@prisma/client';
 import { ICheckAuthOptions, ITokenData, IVerifiedTokenData } from './types';
 import prisma from '../db';
-import { UserRole } from '../db/types';
 import { RequestWithUser } from '../utils/types';
 import { removeUndefinedValues } from '../utils/data';
 import { setRedirectHeader } from '../utils/response';

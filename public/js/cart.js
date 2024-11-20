@@ -44,16 +44,12 @@ function renderCart(cartData) {
   cartProducts.innerHTML = ''; // Clear existing products
 
   if (cartData.cartProducts.length === 0) {
-    cartProducts.innerHTML = '<p>No products added yet</p>';
+    cartProducts.innerHTML = '<p class="cart-product">No products added yet</p>';
     return;
   }
 
   const imagePlaceholder = productImagePlaceholder('cart-product-image');
   cartData.cartProducts.forEach((cartProduct) => {
-    if (cartProduct.product.name === '1') {
-      cartProduct.product.image =
-        'https://firebasestorage.googleapis.com/v0/b/simply-depo-staging-media/o/converted%2FU63I2u8CaHa8T6EHCKEjDyAASiA2%2F1ad11a8071b2ae1f497b72efc352241adff74e713c6496d0291dcc90b86db010.png?alt=media&token=9fb0b719-ba39-4cf8-bdc1-2f2262524ba7';
-    }
     const cartProductElement = document.createElement('div');
     cartProductElement.classList.add('cart-product');
     cartProductElement.innerHTML = `
