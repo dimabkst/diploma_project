@@ -22,10 +22,8 @@ export function getProductsPage() {
 
       <div class="filters-product-list-pagination">
           <div class="filters">
-              <h3>Filters</h3>
-              <label><input type="checkbox" /> Option 1</label><br />
-              <label><input type="checkbox" /> Option 2</label><br />
-              <label><input type="checkbox" /> Option 3</label><br />
+              <div id="categories-filter" class="filter checkbox-filter"></div>
+              <div id="manufacturers-filter" class="filter checkbox-filter"></div>
           </div>
 
           <div class="products-list-pagination">
@@ -40,6 +38,8 @@ export function getProductsPage() {
 }
 
 export function productsPageTriggers() {
+  fetchCategories();
+  fetchManufacturers();
   fetchProducts();
   addEventListeners();
 }
@@ -50,6 +50,8 @@ let pagination = {
 };
 let filters = {
   sort_name: 'asc',
+  category_ids: '',
+  manufacturer_ids: '',
 };
 
 async function fetchProducts() {
@@ -125,5 +127,79 @@ function addToCart(productsData) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(productsData),
+  });
+}
+
+async function fetchCategories() {
+  const response = await customFetch('/api/product-categories');
+  const data = await response.json();
+
+  const categoriesFilter = document.getElementById('categories-filter');
+  categoriesFilter.innerHTML = '<h3 class="filter-title">Categories</h3>';
+
+  if (!data?.productCategories?.length) {
+    const noCategoriesTextElement = document.createElement('div');
+    noCategoriesTextElement.innerHTM = '<p>No categories found</p>';
+    categoriesFilter.appendChild(noCategoriesTextElement);
+    return;
+  }
+
+  data?.productCategories?.forEach((category) => {
+    const categoryElement = document.createElement('div');
+    categoryElement.classList.add('checkbox-filter-item');
+    categoryElement.innerHTML = `
+        <label class="checkbox-filter-label">
+            <input type="checkbox" class="category-filter" value="${category.id}" />
+            ${category.name}
+        </label>
+    `;
+    categoriesFilter.appendChild(categoryElement);
+  });
+
+  document.querySelectorAll('.category-filter').forEach((checkbox) => {
+    checkbox.addEventListener('change', () => {
+      filters.category_ids = JSON.stringify(
+        Array.from(document.querySelectorAll('.category-filter:checked')).map((checkbox) => Number(checkbox.value))
+      );
+      pagination.page = 1;
+      fetchProducts();
+    });
+  });
+}
+
+async function fetchManufacturers() {
+  const response = await customFetch('/api/manufacturers');
+  const data = await response.json();
+
+  const manufacturersFilter = document.getElementById('manufacturers-filter');
+  manufacturersFilter.innerHTML = '<h3 class="filter-title">Manufacturers</h3>';
+
+  if (!data?.manufacturers?.length) {
+    const noManufacturersTextElement = document.createElement('div');
+    noManufacturersTextElement.innerHTM = '<p>No manufacturers found</p>';
+    manufacturersFilter.appendChild(noManufacturersTextElement);
+    return;
+  }
+
+  data?.manufacturers?.forEach((manufacturer) => {
+    const manufacturerElement = document.createElement('div');
+    manufacturerElement.classList.add('checkbox-filter-item');
+    manufacturerElement.innerHTML = `
+        <label class="checkbox-filter-label">
+            <input type="checkbox" class="manufacturer-filter" value="${manufacturer.id}" />
+            ${manufacturer.name}
+        </label>
+    `;
+    manufacturersFilter.appendChild(manufacturerElement);
+  });
+
+  document.querySelectorAll('.manufacturer-filter').forEach((checkbox) => {
+    checkbox.addEventListener('change', () => {
+      filters.manufacturer_ids = JSON.stringify(
+        Array.from(document.querySelectorAll('.manufacturer-filter:checked')).map((checkbox) => Number(checkbox.value))
+      );
+      pagination.page = 1;
+      fetchProducts();
+    });
   });
 }
