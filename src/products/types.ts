@@ -10,6 +10,7 @@ export interface ICreateProductPayload {
   price: number;
   active?: boolean;
   stock?: number;
+  image?: string;
   countryOfOrigin?: string;
   description?: string;
   color?: string;
@@ -24,6 +25,7 @@ export interface IUpdateProductPayload {
   price?: number;
   active?: boolean;
   stock?: number;
+  image?: string;
   countryOfOrigin?: string;
   description?: string;
   color?: string;

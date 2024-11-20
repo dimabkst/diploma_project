@@ -48,8 +48,6 @@ model Manufacturer {
   name          String
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @default(now()) @updatedAt
-  // photoId                            String?                             @unique
-  // photo                              Photo?                              @relation(fields: [photoId], references: [id])
   products      Product[]
   orderProducts OrderProduct[]
 
@@ -73,6 +71,7 @@ model Product {
   price             Float
   active            Boolean          @default(true)
   stock             Int              @default(0)
+  image             String?
   countryOfOrigin   String?
   description       String?
   color             String?
@@ -84,7 +83,6 @@ model Product {
   manufacturer      Manufacturer?    @relation(fields: [manufacturerId], references: [id], onDelete: Cascade)
   productCategoryId Int?
   productCategory   ProductCategory? @relation(fields: [productCategoryId], references: [id])
-  // photos                             Photo[]
   cartProducts      CartProduct[]
   orderProducts     OrderProduct[]
 }
@@ -113,6 +111,7 @@ model OrderProduct {
   quantity            Int
   price               Float
   name                String
+  image               String?
   countryOfOrigin     String?
   description         String?
   color               String?
@@ -122,19 +121,16 @@ model OrderProduct {
   order               Order            @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productId           Int?
   product             Product?         @relation(fields: [productId], references: [id])
-  manufacturerName    String
+  manufacturerName    String?
   manufacturerId      Int?
   manufacturer        Manufacturer?    @relation(fields: [manufacturerId], references: [id])
   productCategoryName String?
   productCategoryId   Int?
   productCategory     ProductCategory? @relation(fields: [productCategoryId], references: [id])
-  // photoId                        String?
-  // photo                          Photo?                                          @relation(fields: [photoId], references: [id])
 }
 
 model Order {
   id               Int               @id @default(autoincrement())
-  customId         String            @unique
   status           String            @default("PENDING")
   orderStatus      OrderStatus       @relation(fields: [status], references: [status])
   totalAmount      Float             @default(0)

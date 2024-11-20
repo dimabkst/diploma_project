@@ -1,5 +1,10 @@
 import { toastError } from './errors.js';
 
+export function redirect(url) {
+  history.pushState({}, '', url);
+  window.dispatchEvent(new PopStateEvent('popstate'));
+}
+
 export async function customFetch(url, options = {}) {
   try {
     const response = await fetch(url, options);
@@ -7,8 +12,7 @@ export async function customFetch(url, options = {}) {
     const redirectUrl = response.headers.get('HX-Redirect');
 
     if (redirectUrl) {
-      history.pushState({}, '', redirectUrl);
-      window.dispatchEvent(new PopStateEvent('popstate')); // Triggers a route change
+      redirect(redirectUrl);
     }
 
     if (!response?.ok) {

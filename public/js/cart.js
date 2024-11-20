@@ -1,5 +1,5 @@
 import { toastError } from './errors.js';
-import { customFetch, productImagePlaceholder } from './utils.js';
+import { customFetch, productImagePlaceholder, redirect } from './utils.js';
 
 export function getCartPage() {
   return `
@@ -134,6 +134,14 @@ function addEventListeners() {
       .then((response) => response.json())
       .then((data) => renderCart(data));
   });
+
+  document.getElementById('cart-checkout-button').addEventListener('click', () => {
+    createOrder().then((response) => {
+      if (response?.ok) {
+        redirect('/orders');
+      }
+    });
+  });
 }
 
 function removeFromCart(cartProductsRemoveData) {
@@ -153,5 +161,15 @@ function updateCartQuantities(cartProductsUpdateData) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(cartProductsUpdateData),
+  });
+}
+
+function createOrder() {
+  return customFetch('/api/orders', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({}),
   });
 }

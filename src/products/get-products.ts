@@ -22,7 +22,7 @@ const getProducts = async (req: RequestWithQuery<IGetProductsQuery>, res: Respon
 
   const getQuery = prisma.product.findMany({
     where: filter,
-    select: { id: true, name: true, price: true },
+    select: { id: true, name: true, price: true, image: true },
     ...pagination,
     orderBy: [{ name: req.query.sort_name || 'asc' }, { id: 'asc' }],
   });
