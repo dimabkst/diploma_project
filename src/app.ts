@@ -2,6 +2,7 @@ require('dotenv').config();
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import cors from 'cors';
 import prisma from './db';
 import logger from './utils/logger';
 
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
+app.use(cors());
 
 app.use('/api', api);
 app.use(ssr);
