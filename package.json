@@ -7,7 +7,7 @@
     "dev": "nodemon --watch src --ext ts --exec ts-node src/app.ts",
     "prebuild": "rimraf dist",
     "build": "tsc",
-    "postbuild": "copyfiles public/**/* src/views/* dist",
+    "postbuild": "copyfiles public/**/* public/**/**/* src/views/* dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "prisma": {
