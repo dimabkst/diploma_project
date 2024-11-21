@@ -24,6 +24,15 @@ export function getProductsPage() {
           <div class="filters">
               <div id="categories-filter" class="filter checkbox-filter"></div>
               <div id="manufacturers-filter" class="filter checkbox-filter"></div>
+              <div id="price-filter" class="filter price-filter">
+                  <h3 class="filter-title">Price</h3>
+                  <div class="price-inputs">
+                      <input type="number" id="price-min" class="price-input" placeholder="Min" min="0" step="1" value=""/>
+                      <input type="number" id="price-max" class="price-input" placeholder="Max" min="0" step="1" value=""/>
+                      <button id="apply-price-filter">OK</button>
+                  </div>
+              </div>
+
           </div>
 
           <div class="products-list-pagination">
@@ -52,6 +61,8 @@ let filters = {
   sort_name: 'asc',
   category_ids: '',
   manufacturer_ids: '',
+  price_gte: '',
+  price_lte: '',
 };
 
 async function fetchProducts() {
@@ -117,6 +128,27 @@ function addEventListeners() {
     const [key, value] = event.target.value.split(':');
     filters[key] = value;
     fetchProducts();
+  });
+
+  const minPriceInput = document.getElementById('price-min');
+  const maxPriceInput = document.getElementById('price-max');
+  document.getElementById('apply-price-filter').addEventListener('click', () => {
+    filters.price_gte = minPriceInput.value;
+    filters.price_lte = maxPriceInput.value;
+    pagination.page = 1;
+
+    fetchProducts();
+  });
+  [minPriceInput, maxPriceInput].forEach((input) => {
+    input.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        filters.price_gte = minPriceInput.value;
+        filters.price_lte = maxPriceInput.value;
+        pagination.page = 1;
+
+        fetchProducts();
+      }
+    });
   });
 }
 

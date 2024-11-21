@@ -35,10 +35,6 @@ const getProducts = async (req: RequestWithQuery<IGetProductsQuery>, res: Respon
   }
 
   if (req.query.price_gte || req.query.price_lte) {
-    if (req.query.price_gte && req.query.price_lte) {
-      throw new HttpError(400, 'Invalid price thresholds');
-    }
-
     filter.AND = [];
 
     if (req.query.price_gte) {
