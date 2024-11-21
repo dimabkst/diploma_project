@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express';
+import { Response, Router } from 'express';
 import getRegistrationPage from './get-registration-page';
 import getLoginPage from './get-login-page';
 import { checkAuth } from '../auth/services';
@@ -18,7 +18,10 @@ ssr.get('/', checkAuth({ allowUnauthenticated: true }), (req: RequestWithUser, r
   return res.render('index');
 });
 
-ssr.get('*', (req: Request, res: Response) => {
+ssr.get('*', checkAuth({ allowUnauthenticated: true }), (req: RequestWithUser, res: Response) => {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
   return res.render('layout');
 });
 
