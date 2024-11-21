@@ -153,7 +153,7 @@
     border-color: black;
 }
 
-#apply-price-filter {
+.apply-price-filter {
     width: 60px;
     padding: 5px 10px;
     font-size: 1rem;
@@ -164,7 +164,7 @@
     cursor: pointer;
 }
 
-#apply-price-filter:hover {
+.apply-price-filter:hover {
     background-color: var(--darkened-app-logo-color);
 }
 

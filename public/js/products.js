@@ -22,14 +22,18 @@ export function getProductsPage() {
 
       <div class="filters-product-list-pagination">
           <div class="filters">
-              <div id="categories-filter" class="filter checkbox-filter"></div>
-              <div id="manufacturers-filter" class="filter checkbox-filter"></div>
+              <div id="categories-filter" class="filter checkbox-filter">
+                  <h3 class="filter-title">Categories</h3>
+              </div>
+              <div id="manufacturers-filter" class="filter checkbox-filter">
+                  <h3 class="filter-title">Manufacturers</h3>
+              </div>
               <div id="price-filter" class="filter price-filter">
                   <h3 class="filter-title">Price</h3>
                   <div class="price-inputs">
                       <input type="number" id="price-min" class="price-input" placeholder="Min" min="0" step="1" value=""/>
                       <input type="number" id="price-max" class="price-input" placeholder="Max" min="0" step="1" value=""/>
-                      <button id="apply-price-filter">OK</button>
+                      <button id="apply-price-filter" class="apply-price-filter">OK</button>
                   </div>
               </div>
 
@@ -167,7 +171,6 @@ async function fetchCategories() {
   const data = await response.json();
 
   const categoriesFilter = document.getElementById('categories-filter');
-  categoriesFilter.innerHTML = '<h3 class="filter-title">Categories</h3>';
 
   if (!data?.productCategories?.length) {
     const noCategoriesTextElement = document.createElement('div');
@@ -204,7 +207,6 @@ async function fetchManufacturers() {
   const data = await response.json();
 
   const manufacturersFilter = document.getElementById('manufacturers-filter');
-  manufacturersFilter.innerHTML = '<h3 class="filter-title">Manufacturers</h3>';
 
   if (!data?.manufacturers?.length) {
     const noManufacturersTextElement = document.createElement('div');
