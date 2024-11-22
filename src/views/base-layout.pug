@@ -52,6 +52,24 @@ html(lang="en")
         div
         span#toast-message
 
-    script(type="module" src="/js/firebase-config.js")
+    script(type="module").
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+      import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDyihcFbEr7rgyoF8WhArGK_VEAunjFfjo",
+        authDomain: "diploma-project-442315.firebaseapp.com",
+        projectId: "diploma-project-442315",
+        storageBucket: "diploma-project-442315.firebasestorage.app",
+        messagingSenderId: "330818862501",
+        appId: "1:330818862501:web:e86c06c90740a94d597c4c",
+        measurementId: "G-S523KR5KDG"
+      };
+
+      const app = initializeApp(firebaseConfig);
+
+      window.analytics = getAnalytics(app);
+      window.logEvent = logEvent;
+
     script(type="module", src="/js/main.js")
     script(src="https://unpkg.com/htmx.org@2.0.2")
