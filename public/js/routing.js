@@ -51,7 +51,7 @@ function matchRoute(path) {
     }
   }
 
-  return;
+  return { route: path };
 }
 
 function renderPage(path, params) {

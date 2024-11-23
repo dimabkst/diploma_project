@@ -48,7 +48,7 @@ export const checkAuth = (options?: ICheckAuthOptions) => {
       const jwtData: IVerifiedTokenData = verifyToken(token);
 
       if (options?.superAdminOnly && jwtData.userRole !== UserRole.SUPER_ADMIN) {
-        throw new HttpError(401, 'You have no access to this resource');
+        throw new HttpError(403, 'You have no access to this resource');
       }
 
       const user = await prisma.user.findUnique({
