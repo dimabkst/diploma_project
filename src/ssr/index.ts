@@ -10,10 +10,7 @@ ssr.get('/register', checkAuth({ allowUnauthenticated: true }), getRegistrationP
 ssr.get('/login', checkAuth({ allowUnauthenticated: true }), getLoginPage);
 
 ssr.get('/', checkAuth({ allowUnauthenticated: true }), (req: RequestWithUser, res: Response) => {
-  if (!req.user) {
-    return res.redirect('/login');
-  }
-  return res.render('index');
+  return res.render(req.user ? 'index' : 'auth-index');
 });
 
 ssr.get(['/admin', '/admin/*'], checkAuth({ superAdminOnly: true }), (req: RequestWithUser, res: Response) => {
