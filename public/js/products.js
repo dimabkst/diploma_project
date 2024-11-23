@@ -1,3 +1,4 @@
+import { analytics, logEvent } from './firebase-config.js';
 import { createPagination } from './pagination.js';
 import { customFetch, productImagePlaceholder } from './utils.js';
 
@@ -110,8 +111,10 @@ function renderProducts(products, count) {
   });
 
   document.querySelectorAll('.add-to-cart').forEach((button) =>
-    button.addEventListener('click', function (event) {
-      addToCart([
+    button.addEventListener('click', async function (event) {
+      await logEvent(analytics, 'add_to_cart');
+
+      await addToCart([
         {
           productId: Number(event.target.getAttribute('product-id')),
           quantity: 1,
