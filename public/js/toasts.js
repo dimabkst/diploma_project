@@ -1,3 +1,5 @@
+import { analytics, logEvent } from './firebase-config.js';
+
 // Function to display toast messages
 export function showToast(message, type = 'success', duration = 2000) {
   const toastContainer = document.getElementById('toast-container');
@@ -20,4 +22,22 @@ export function showToast(message, type = 'success', duration = 2000) {
   setTimeout(() => {
     toastContainer.removeChild(toastTemplate);
   }, duration);
+}
+
+export function addToastsEventListeners() {
+  const toastContainer = document.getElementById('toast-container');
+
+  toastContainer?.addEventListener('click', () => {
+    logEvent(analytics, 'toast_click', {
+      action: 'clicked',
+      timestamp: Date.now(),
+    });
+  });
+
+  toastContainer?.addEventListener('mouseenter', () => {
+    logEvent(analytics, 'toast_hover', {
+      action: 'hovered',
+      timestamp: Date.now(),
+    });
+  });
 }
