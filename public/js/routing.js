@@ -87,9 +87,9 @@ function handleRouteChange() {
 
   const matchedRoute = matchRoute(path);
 
-  if (matchedRoute && !isServerRenderedRoute(matchedRoute.route)) {
-    renderPage(matchedRoute.route, matchedRoute.params);
-    executePageTriggers(matchedRoute.route, matchedRoute.params);
+  if (!isServerRenderedRoute(matchedRoute?.route)) {
+    renderPage(matchedRoute?.route, matchedRoute?.params);
+    executePageTriggers(matchedRoute?.route, matchedRoute?.params);
   } else if (sessionStorage.getItem('lastRedirectedPath') !== path) {
     sessionStorage.setItem('lastRedirectedPath', path);
     window.location.href = path;
