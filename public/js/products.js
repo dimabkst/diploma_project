@@ -23,12 +23,6 @@ export function getProductsPage() {
 
       <div class="filters-product-list-pagination">
           <div class="filters">
-              <div id="categories-filter" class="filter checkbox-filter">
-                  <h3 class="filter-title">Categories</h3>
-              </div>
-              <div id="manufacturers-filter" class="filter checkbox-filter">
-                  <h3 class="filter-title">Manufacturers</h3>
-              </div>
               <div id="price-filter" class="filter price-filter">
                   <h3 class="filter-title">Price</h3>
                   <div class="price-inputs">
@@ -36,6 +30,12 @@ export function getProductsPage() {
                       <input type="number" id="price-max" class="price-input" placeholder="Max" min="0" step="1" value=""/>
                       <button id="apply-price-filter" class="apply-price-filter">OK</button>
                   </div>
+              </div>
+              <div id="categories-filter" class="filter checkbox-filter">
+                  <h3 class="filter-title">Categories</h3>
+              </div>
+              <div id="manufacturers-filter" class="filter checkbox-filter">
+                  <h3 class="filter-title">Manufacturers</h3>
               </div>
 
           </div>
