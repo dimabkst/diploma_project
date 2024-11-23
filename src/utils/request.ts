@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
+import { LogLevel } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { HttpError } from './error';
 import logger from './logger';
+import { saveLog } from './logs';
 import { setRedirectHeader } from './response';
 import { RequestWithUser } from './types';
-import { saveLog } from './logs';
-import { LogLevel } from '@prisma/client';
 
 export function checkUserInRequest(user: RequestWithUser['user']): asserts user is Required<RequestWithUser>['user'] {
   if (!user) {

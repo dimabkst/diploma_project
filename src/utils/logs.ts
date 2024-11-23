@@ -15,7 +15,7 @@ export const saveLog = async (data: {
     data: {
       ...data,
       stackTrace: data.stackTrace || undefined,
-      context: data.context ? JSON.stringify(data.context, null, 2) : undefined,
+      context: data.context || undefined,
     },
     select: { id: true },
   });

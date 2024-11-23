@@ -2,7 +2,6 @@ import { Response } from 'express';
 import { Prisma } from '@prisma/client';
 import { IGetProductsQuery } from './types';
 import prisma from '../db';
-import { HttpError } from '../utils/error';
 import { offsetPaginate } from '../utils/pagination';
 import handleRequest from '../utils/request';
 import searchPayload from '../utils/search';
@@ -49,18 +48,17 @@ const getProducts = async (req: RequestWithQuery<IGetProductsQuery>, res: Respon
     filter.name = searchPayload(req.query.search);
   }
 
-  const countQuery = prisma.product.count({
-    where: filter,
-  });
-
-  const getQuery = prisma.product.findMany({
-    where: filter,
-    select: { id: true, name: true, price: true, image: true },
-    ...pagination,
-    orderBy: [{ name: req.query.sort_name || 'asc' }, { id: 'asc' }],
-  });
-
-  const [count, products] = await Promise.all([countQuery, getQuery]);
+  const [count, products] = await Promise.all([
+    prisma.product.count({
+      where: filter,
+    }),
+    prisma.product.findMany({
+      where: filter,
+      select: { id: true, name: true, price: true, image: true },
+      ...pagination,
+      orderBy: [{ name: req.query.sort_name || 'asc' }, { id: 'asc' }],
+    }),
+  ]);
 
   return res.status(200).json({ count, products });
 };
