@@ -63,17 +63,20 @@ let pagination = {
   limit: 50,
 };
 let filters = {
-  sort_name: 'asc',
   category_ids: '',
   manufacturer_ids: '',
   price_gte: '',
   price_lte: '',
+};
+let sorting = {
+  sort_name: 'asc',
 };
 
 async function fetchProducts() {
   const params = new URLSearchParams({
     ...pagination,
     ...filters,
+    ...sorting,
   });
 
   const response = await customFetch(`/api/products/?${params}`);
@@ -133,7 +136,7 @@ function addEventListeners() {
 
   document.getElementById('sorting').addEventListener('change', (event) => {
     const [key, value] = event.target.value.split(':');
-    filters[key] = value;
+    sorting[key] = value;
     fetchProducts();
   });
 

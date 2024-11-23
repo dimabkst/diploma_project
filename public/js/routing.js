@@ -1,6 +1,7 @@
 import { cartPageTriggers, getCartPage } from './cart.js';
 import { getOrdersPage, ordersPageTriggers } from './orders.js';
 import { getProductsPage, productsPageTriggers } from './products.js';
+import { errorLogsPageTriggers, getErrorLogsPage } from './admin/error-logs.js';
 
 const routes = {
   '/products': {
@@ -14,6 +15,10 @@ const routes = {
   '/orders': {
     template: getOrdersPage,
     triggers: ordersPageTriggers,
+  },
+  '/admin/error-logs': {
+    template: getErrorLogsPage,
+    triggers: errorLogsPageTriggers,
   },
 };
 
@@ -42,7 +47,7 @@ function executePageTriggers(path) {
 }
 
 export function isServerRenderedRoute(path) {
-  return ['/login', '/register', '/'].includes(path);
+  return ['/login', '/register', '/', '/admin'].includes(path);
 }
 
 function handleRouteChange() {

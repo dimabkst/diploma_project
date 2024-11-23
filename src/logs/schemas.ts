@@ -10,8 +10,10 @@ export const getSchema: Joi.ObjectSchema = Joi.object({
       .insensitive()
       .allow(''),
     status: Joi.number().positive().integer().optional().allow(''),
-    method: Joi.string().valid('GET', 'POST', 'PUT', 'PATCH', 'DELETE').insensitive().optional().allow(''),
+    method: Joi.string().optional().allow(''),
     base_url: Joi.string().optional().allow(''),
+    sort_date: Joi.string().valid('asc', 'desc').optional().allow(''),
+    sort_status: Joi.string().valid('asc', 'desc').optional().allow(''),
   }),
 });
 

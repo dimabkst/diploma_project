@@ -36,6 +36,16 @@ const getLogs = async (req: RequestWithQuery<IGetLogsQuery>, res: Response) => {
 
   const pagination = offsetPaginate(req.query.limit, req.query.page);
 
+  const sorting: Prisma.LogOrderByWithRelationInput = {};
+
+  if (req.query.sort_date) {
+    sorting.timestamp = req.query.sort_date;
+  } else if (req.query.sort_status) {
+    sorting.status = req.query.sort_status;
+  } else {
+    sorting.timestamp = 'desc';
+  }
+
   const [count, logs] = await Promise.all([
     prisma.log.count({
       where: logsFilter,
@@ -43,7 +53,7 @@ const getLogs = async (req: RequestWithQuery<IGetLogsQuery>, res: Response) => {
     prisma.log.findMany({
       where: logsFilter,
       ...pagination,
-      orderBy: { timestamp: 'desc' },
+      orderBy: sorting,
     }),
   ]);
 
