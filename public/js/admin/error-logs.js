@@ -85,7 +85,10 @@ function renderErrorLogsList(errorLogsData) {
   }
 
   errorLogsData.logs?.forEach((errorLog) => {
-    const errorLogElement = document.createElement('div');
+    const errorLogElement = document.createElement('a');
+    errorLogElement.setAttribute('href', `/admin/error-log/${errorLog.id}`);
+    errorLogElement.setAttribute('data-route', '');
+
     errorLogElement.classList.add('error-logs-list-item');
     errorLogElement.innerHTML = `
         <div class="error-log-item error-log-id">${errorLog.id}</div>

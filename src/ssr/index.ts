@@ -16,7 +16,7 @@ ssr.get('/', checkAuth({ allowUnauthenticated: true }), (req: RequestWithUser, r
   return res.render('index');
 });
 
-ssr.get('/admin*', checkAuth({ superAdminOnly: true }), (req: RequestWithUser, res: Response) => {
+ssr.get(['/admin', '/admin/*'], checkAuth({ superAdminOnly: true }), (req: RequestWithUser, res: Response) => {
   return res.render('admin-layout');
 });
 

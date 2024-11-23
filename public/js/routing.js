@@ -2,6 +2,7 @@ import { cartPageTriggers, getCartPage } from './cart.js';
 import { getOrdersPage, ordersPageTriggers } from './orders.js';
 import { getProductsPage, productsPageTriggers } from './products.js';
 import { errorLogsPageTriggers, getErrorLogsPage } from './admin/error-logs.js';
+import { errorLogPageTriggers, getErrorLogPage } from './admin/error-log.js';
 
 const routes = {
   '/products': {
@@ -20,9 +21,40 @@ const routes = {
     template: getErrorLogsPage,
     triggers: errorLogsPageTriggers,
   },
+  '/admin/error-log/:id': {
+    template: getErrorLogPage,
+    triggers: errorLogPageTriggers,
+  },
 };
 
-function renderPage(path) {
+function matchRoute(path) {
+  for (const route of Object.keys(routes)) {
+    const regex = new RegExp(
+      '^' +
+        route
+          .replace(/:[^/]+/g, '([^/]+)') // replace params (like :id) with a capture groups
+          .replace(/\//g, '\\/') + // escape slashes
+        '$'
+    );
+
+    const match = path.match(regex);
+    if (match) {
+      const params = {};
+
+      // extract dynamic params
+      const keys = [...route.matchAll(/:([^/]+)/g)].map((m) => m[1]);
+      keys.forEach((key, i) => {
+        params[key] = match[i + 1]; // match groups start at index 1
+      });
+
+      return { route, params };
+    }
+  }
+
+  return;
+}
+
+function renderPage(path, params) {
   const appRoot = document.getElementById('app-root');
 
   if (!appRoot) {
@@ -33,16 +65,16 @@ function renderPage(path) {
   const route = routes[path];
 
   if (route && route.template) {
-    appRoot.innerHTML = route.template();
+    appRoot.innerHTML = route.template(params);
   } else {
     appRoot.innerHTML = `<h1>Page Not Found</h1>`;
   }
 }
 
-function executePageTriggers(path) {
+function executePageTriggers(path, params) {
   const route = routes[path];
   if (route && route.triggers) {
-    route.triggers();
+    route.triggers(params);
   }
 }
 
@@ -53,9 +85,11 @@ export function isServerRenderedRoute(path) {
 function handleRouteChange() {
   const path = window.location.pathname;
 
-  if (!isServerRenderedRoute(path)) {
-    renderPage(path);
-    executePageTriggers(path);
+  const matchedRoute = matchRoute(path);
+
+  if (matchedRoute && !isServerRenderedRoute(matchedRoute.route)) {
+    renderPage(matchedRoute.route, matchedRoute.params);
+    executePageTriggers(matchedRoute.route, matchedRoute.params);
   } else if (sessionStorage.getItem('lastRedirectedPath') !== path) {
     sessionStorage.setItem('lastRedirectedPath', path);
     window.location.href = path;

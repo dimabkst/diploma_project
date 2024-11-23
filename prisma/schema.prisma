@@ -148,13 +148,12 @@ model Order {
 }
 
 model Log {
-  id         Int      @id @default(autoincrement())
-  timestamp  DateTime @default(now())
-  level      LogLevel
-  message    String
-  status     Int?
-  stackTrace String?
-  context    Json?
+  id        Int      @id @default(autoincrement())
+  timestamp DateTime @default(now())
+  level     LogLevel
+  message   String
+  status    Int?
+  context   Json?
 }
 
 // enums

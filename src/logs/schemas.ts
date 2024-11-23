@@ -17,6 +17,12 @@ export const getSchema: Joi.ObjectSchema = Joi.object({
   }),
 });
 
+export const getByIdSchema: Joi.ObjectSchema = Joi.object({
+  params: Joi.object({
+    id: Joi.number().positive().integer().required(),
+  }),
+});
+
 export const deleteSchema: Joi.ObjectSchema = Joi.object({
   params: Joi.object({
     id: Joi.number().positive().integer().required(),

@@ -67,11 +67,17 @@
 }
 
 .error-logs-list-item {
+    text-decoration: none;
+    color: black;
     margin: 0;
     display: flex;
     padding: 15px;
     border-bottom: 1px solid #ddd;
     background-color: white;
+}
+
+.error-logs-list-item:hover {
+    background-color: #f7f7f7;
 }
 
 .error-log-item {

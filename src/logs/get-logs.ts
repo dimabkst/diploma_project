@@ -51,6 +51,12 @@ const getLogs = async (req: RequestWithQuery<IGetLogsQuery>, res: Response) => {
       where: logsFilter,
     }),
     prisma.log.findMany({
+      select: {
+        id: true,
+        timestamp: true,
+        status: true,
+        context: true,
+      },
       where: logsFilter,
       ...pagination,
       orderBy: sorting,
