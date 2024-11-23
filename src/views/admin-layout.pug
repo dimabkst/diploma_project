@@ -1,0 +1,15 @@
+extends base-layout
+
+block header-menu-left
+  li.header-menu-item
+    a.header-menu-item-anchor.header-icon-anchor(data-route href='/admin')
+      img.header-icon(src='/images/icons/icon.svg' alt='Home Icon')
+
+  li.header-menu-item
+    a.header-menu-item-anchor(data-route href='/admin/error-logs')
+      span Error Logs
+
+block header-menu-right
+  li.header-menu-item
+    form(id='logout-form', hx-post='/api/auth/logout', hx-target='this', hx-swap='none')
+      button(type='submit', class='header-button button-signout') Sign Out

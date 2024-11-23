@@ -9,13 +9,15 @@ const ssr: Router = Router();
 ssr.get('/register', checkAuth({ allowUnauthenticated: true }), getRegistrationPage);
 ssr.get('/login', checkAuth({ allowUnauthenticated: true }), getLoginPage);
 
-// TODO: change this logic or fix multiple renderings on client after redirect to login or remove all ssr routes
-// or fix toasts when rerendering page
 ssr.get('/', checkAuth({ allowUnauthenticated: true }), (req: RequestWithUser, res: Response) => {
   if (!req.user) {
     return res.redirect('/login');
   }
   return res.render('index');
+});
+
+ssr.get(['/admin', '/admin/*'], checkAuth({ superAdminOnly: true }), (req: RequestWithUser, res: Response) => {
+  return res.render('admin-layout');
 });
 
 ssr.get('*', checkAuth({ allowUnauthenticated: true }), (req: RequestWithUser, res: Response) => {
