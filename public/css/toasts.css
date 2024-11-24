@@ -42,6 +42,12 @@
     margin-bottom: 15px;
     border-radius: 5px;
     animation: slide-up 2s ease forwards;
+    animation-play-state: running;
+    will-change: transform, opacity;
+}
+
+.toast-message.paused {
+    animation-play-state: paused;
 }
 
 .error-toast {
@@ -50,4 +56,18 @@
 
 .success-toast {
     background-color: #4CAF50;
+}
+
+.toast-close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.toast-close-button:hover {
+    color: #ddd;
 }
