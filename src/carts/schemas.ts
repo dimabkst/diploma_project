@@ -11,7 +11,8 @@ export const addProductsSchema: Joi.ObjectSchema = Joi.object({
 
 export const removeCartProductsSchema: Joi.ObjectSchema = Joi.object({
   body: Joi.object({
-    cartProductIds: Joi.array().items(Joi.number().strict().positive().integer().required()).optional(),
+    cartProductIds: Joi.array().items(Joi.number().strict().positive().integer()).optional(),
+    productIds: Joi.array().items(Joi.number().strict().positive().integer()).optional(),
     removeAll: Joi.boolean().strict().optional(),
   }),
 });

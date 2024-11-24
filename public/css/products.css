@@ -198,7 +198,7 @@
     background-color: white;
     display: grid;
     grid-template-rows: auto auto auto;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr auto auto;
     gap: 10px;
 }
 
@@ -253,18 +253,44 @@
 .add-to-cart {
     grid-row: 3;
     grid-column: 3;
-    background-color: var(--app-logo-color);
-    color: white;
+    background-color: white;
     border: none;
     border-radius: 4px;
-    padding: 8px 12px;
+    padding: 2px 2px;
     cursor: pointer;
-    font-size: 14px;
     margin: 0;
+    transition: background-color 0.2s ease;
 }
 
 .add-to-cart:hover {
-    background-color: var(--darkened-app-logo-color);
+    /*--app-logo-color with opacity 0.1*/
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.product-cart-icon {
+    height: 32px;
+    width: 32px;
+    stroke: black;
+    stroke-width: 1;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: miter;
+}
+
+.product-cart-icon polyline,
+.product-cart-icon line {
+    stroke-linecap: round;
+    stroke-linejoin: miter;
+}
+
+.product-cart-icon line {
+    stroke-width: 2;
+}
+
+.add-to-cart-active .product-cart-icon {
+    fill: var(--app-logo-color);
+    transform: scale(1.1);
+    transition: transform 0.2s ease, stroke 0.2s ease, fill 0.2s ease;
 }
 
 .pagination-row {

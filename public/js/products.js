@@ -108,7 +108,13 @@ function renderProducts(products, count) {
       ${product.image ? `<img class="product-item-image" src="${product.image}" alt="${product.name}" />` : imagePlaceholder}
       <h3 class="product-title">${product.name}</h3>
       <p class="product-price">$${product.price.toFixed(2)}</p>
-      <button class="add-to-cart" product-id="${product.id}">Add to Cart</button>
+      <button class="add-to-cart ${product._count.cartProducts ? 'add-to-cart-active' : ''}" product-id="${product.id}">
+          <svg class="product-cart-icon ${product._count.cartProducts ? 'product-cart-icon-active ' : ''}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <polyline points="2 3 5 3 8.5 16 18 16 21 7 6.1 7" />
+              <line x1="9.99" y1="20" x2="10.01" y2="20" />
+              <line x1="15.99" y1="20" x2="16.01" y2="20" />
+          </svg>   
+      </button>
     `;
     productsList.appendChild(productElement);
   });
@@ -117,12 +123,24 @@ function renderProducts(products, count) {
     button.addEventListener('click', async function (event) {
       await logEvent(analytics, 'add_to_cart');
 
-      await addToCart([
-        {
-          productId: Number(event.target.getAttribute('product-id')),
-          quantity: 1,
-        },
-      ]);
+      const addToCartButton = event.currentTarget;
+
+      const add = !addToCartButton.classList.contains('add-to-cart-active');
+
+      if (add) {
+        await addToCart([
+          {
+            productId: Number(addToCartButton.getAttribute('product-id')),
+            quantity: 1,
+          },
+        ]);
+        addToCartButton.classList.add('add-to-cart-active');
+      } else {
+        await removeFromCart({
+          productIds: [Number(addToCartButton.getAttribute('product-id'))],
+        });
+        addToCartButton.classList.remove('add-to-cart-active');
+      }
     })
   );
 }
@@ -169,6 +187,16 @@ function addToCart(productsData) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(productsData),
+  });
+}
+
+function removeFromCart(productsRemoveData) {
+  return customFetch('/api/carts', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(productsRemoveData),
   });
 }
 

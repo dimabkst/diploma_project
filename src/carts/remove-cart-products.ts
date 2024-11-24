@@ -27,6 +27,18 @@ const removeCartProducts = async (req: RequestWithUserAndBody<IRemoveCartProduct
     }
 
     cartProductsWhereInput = { id: { in: req.body.cartProductIds } };
+  } else if (req.body.productIds?.length) {
+    const cartProductsCount = await prisma.cartProduct.count({
+      where: {
+        productId: { in: req.body.productIds },
+      },
+    });
+
+    if (cartProductsCount !== req.body.productIds.length) {
+      throw new HttpError(404, 'Some cart products cannot be found');
+    }
+
+    cartProductsWhereInput = { productId: { in: req.body.productIds } };
   }
 
   const cart = await prisma.cart.upsert({
