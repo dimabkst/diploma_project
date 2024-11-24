@@ -5,7 +5,7 @@ export function showToast(message, type = 'success', duration = 2000) {
   const toastContainer = document.getElementById('toast-container');
   const toastTemplate = document.getElementById('toast-template').cloneNode(true);
 
-  toastTemplate.querySelector(`#toast-message`).textContent = message;
+  toastTemplate.querySelector('#toast-message').textContent = message;
 
   toastTemplate.classList.add('toast-message');
 
@@ -18,10 +18,40 @@ export function showToast(message, type = 'success', duration = 2000) {
   toastTemplate.style.display = 'block'; // Make it visible
   toastContainer.appendChild(toastTemplate);
 
-  // Remove the toast after a specified duration
-  setTimeout(() => {
-    toastContainer.removeChild(toastTemplate);
-  }, duration);
+  toastTemplate.remainingDuration = duration;
+
+  // timeout logic
+  const startTimeout = () => {
+    console.log(toastTemplate.remainingDuration);
+    if (toastContainer.contains(toastTemplate)) {
+      toastTemplate.lastStartedAt = Date.now();
+      toastTemplate.timeoutId = setTimeout(() => {
+        toastContainer.removeChild(toastTemplate);
+      }, Number(toastTemplate.remainingDuration));
+      toastTemplate.classList.remove('paused');
+    }
+  };
+  const stopTimeout = () => {
+    toastTemplate.remainingDuration =
+      Number(toastTemplate.remainingDuration) - (Date.now() - Number(toastTemplate.lastStartedAt));
+    clearTimeout(toastTemplate.timeoutId);
+    toastTemplate.classList.add('paused');
+    console.log(toastTemplate.remainingDuration);
+  };
+
+  // close button
+  const closeButton = toastTemplate.querySelector('.toast-close-button');
+  closeButton.addEventListener('click', () => {
+    stopTimeout();
+    if (toastContainer.contains(toastTemplate)) {
+      toastContainer.removeChild(toastTemplate);
+    }
+  });
+
+  startTimeout();
+
+  toastTemplate.addEventListener('mouseenter', stopTimeout);
+  toastTemplate.addEventListener('mouseleave', startTimeout);
 }
 
 export function addToastsEventListeners() {
