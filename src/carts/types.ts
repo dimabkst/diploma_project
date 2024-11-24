@@ -5,6 +5,7 @@ export interface IAddProductsPayload {
 
 export interface IRemoveCartProductsPayload {
   cartProductIds?: number[];
+  productIds?: number[];
   removeAll?: boolean;
 }
 

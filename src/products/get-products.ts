@@ -3,11 +3,13 @@ import { Prisma } from '@prisma/client';
 import { IGetProductsQuery } from './types';
 import prisma from '../db';
 import { offsetPaginate } from '../utils/pagination';
-import handleRequest from '../utils/request';
+import handleRequest, { checkUserInRequest } from '../utils/request';
 import searchPayload from '../utils/search';
-import { RequestWithQuery } from '../utils/types';
+import { RequestWithUser } from '../utils/types';
 
-const getProducts = async (req: RequestWithQuery<IGetProductsQuery>, res: Response) => {
+const getProducts = async (req: RequestWithUser<IGetProductsQuery>, res: Response) => {
+  checkUserInRequest(req.user);
+
   const pagination = offsetPaginate(req.query.limit, req.query.page);
 
   const filter: Prisma.ProductWhereInput = {};
@@ -54,7 +56,13 @@ const getProducts = async (req: RequestWithQuery<IGetProductsQuery>, res: Respon
     }),
     prisma.product.findMany({
       where: filter,
-      select: { id: true, name: true, price: true, image: true },
+      select: {
+        id: true,
+        name: true,
+        price: true,
+        image: true,
+        _count: { select: { cartProducts: { where: { cart: { userId: req.user.id } } } } },
+      },
       ...pagination,
       orderBy: [{ name: req.query.sort_name || 'asc' }, { id: 'asc' }],
     }),

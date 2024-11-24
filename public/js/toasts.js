@@ -22,7 +22,6 @@ export function showToast(message, type = 'success', duration = 2000) {
 
   // timeout logic
   const startTimeout = () => {
-    console.log(toastTemplate.remainingDuration);
     if (toastContainer.contains(toastTemplate)) {
       toastTemplate.lastStartedAt = Date.now();
       toastTemplate.timeoutId = setTimeout(() => {
@@ -36,7 +35,6 @@ export function showToast(message, type = 'success', duration = 2000) {
       Number(toastTemplate.remainingDuration) - (Date.now() - Number(toastTemplate.lastStartedAt));
     clearTimeout(toastTemplate.timeoutId);
     toastTemplate.classList.add('paused');
-    console.log(toastTemplate.remainingDuration);
   };
 
   // close button
