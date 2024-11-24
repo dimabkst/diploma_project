@@ -1,0 +1,25 @@
+.password-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input {
+    width: 100%;
+    /* space for the icon */
+    padding-right: 40px;
+}
+
+.show-password-icon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.show-password-icon:hover {
+    opacity: 1;
+}

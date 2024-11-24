@@ -2,6 +2,7 @@ extends auth-layout
 
 block content
   link(rel="stylesheet" href="/css/login.css")
+  link(rel="stylesheet" href="/css/auth.css")
 
   .login-container
     h2.login-h2 Login
@@ -9,5 +10,9 @@ block content
       .login-form-group
         input(class='login-input', type='email', name='email', required, placeholder='Email')
       .login-form-group
-        input(class='login-input', type='password', name='password', required, autocomplete='current-password', placeholder='Password')
+        .password-group 
+          input(class='login-input password-input', type='password', id='password', name='password', required, autocomplete='current-password', placeholder='Password')
+          img(class='show-password-icon' src='/images/icons/show-password-icon.svg' alt='Show Password')
       button(type='submit' class='login-button') Log In
+
+  script(type="module", src="/js/auth.js")

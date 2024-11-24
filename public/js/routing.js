@@ -82,8 +82,24 @@ export function isServerRenderedRoute(path) {
   return ['/login', '/register', '/', '/admin'].includes(path);
 }
 
+function setActiveTab(path) {
+  const tabElementClasses = ['header-menu-item-anchor', 'header-cart-button'];
+
+  tabElementClasses.forEach((elementClass) => {
+    document.querySelectorAll(`a.${elementClass}`).forEach((link) => {
+      link.classList.remove('active');
+    });
+
+    document.querySelectorAll(`a.${elementClass}[href="${path}"]`).forEach((link) => {
+      link.classList.add('active');
+    });
+  });
+}
+
 function handleRouteChange() {
   const path = window.location.pathname;
+
+  setActiveTab(path);
 
   const matchedRoute = matchRoute(path);
 
@@ -121,8 +137,7 @@ export function routingHandling() {
 
         const href = target.getAttribute('href');
 
-        if (href) {
-          // if (href && href !== window.location.pathname) {
+        if (href && href !== window.location.pathname) {
           history.pushState({}, '', href);
           handleRouteChange();
         }
