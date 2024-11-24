@@ -121,8 +121,7 @@ export function routingHandling() {
 
         const href = target.getAttribute('href');
 
-        if (href) {
-          // if (href && href !== window.location.pathname) {
+        if (href && href !== window.location.pathname) {
           history.pushState({}, '', href);
           handleRouteChange();
         }
