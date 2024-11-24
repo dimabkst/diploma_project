@@ -1,1 +1,1 @@
-export const sensitiveFields = ['email', 'password', 'token', 'phone'];
+export const sensitiveFields = ['email', 'password', 'repeatPassword', 'token', 'phone'];
